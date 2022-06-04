@@ -8,7 +8,7 @@ import { CodePipeline} from 'aws-cdk-lib/pipelines';
 const app = new cdk.App();
 new PipelineStack(app, 'PipelineStack', {});
 
-new BillingStack(app, 'BillingStack', {
-  EmailAddress:"rahul@lifeboxhealth.com",
-  BudgetAmount:5
-});
+// new BillingStack(app, 'BillingStack', {
+//   EmailAddress:"rahul@lifeboxhealth.com",
+//   BudgetAmount:5
+// });

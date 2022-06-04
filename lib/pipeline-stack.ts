@@ -15,7 +15,7 @@ export class PipelineStack extends Stack {
     });
 
     const cdkSourceOutput =  new Artifact('CDK-Demo-Source-Output')
-
+    
     pipeline.addStage({
       stageName: "Source",
       actions: [

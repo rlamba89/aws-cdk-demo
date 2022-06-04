@@ -1,6 +1,6 @@
 version: 0.2
 
-phase:
+phases:
   install:
     commands:
       - npm install -g npm
@@ -8,7 +8,7 @@ phase:
   build:
     commands:
       - npm run build
-      - npm run test
+      - npm test
       - npm run cdk -- synth
 
 artifacts:

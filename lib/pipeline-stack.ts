@@ -50,7 +50,7 @@ export class PipelineStack extends Stack {
     })
 
     pipeline.addStage({
-      stageName:'CDK_Pipeline_Update',
+      stageName:'Pipeline_Update',
       actions:[
         new CloudFormationCreateUpdateStackAction({
           actionName:'CDK-Pipeline-Update',

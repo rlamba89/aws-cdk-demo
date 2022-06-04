@@ -140,12 +140,20 @@
       {
        "Action": "sts:AssumeRole",
        "Effect": "Allow",
-       "Resource": {
-        "Fn::GetAtt": [
-         "PipelineBuildCDKBuildCodePipelineActionRoleF76A3E0C",
-         "Arn"
-        ]
-       }
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "PipelineBuildCDKBuildCodePipelineActionRoleF76A3E0C",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::GetAtt": [
+          "PipelineCDKPipelineUpdateCDKPipelineUpdateCodePipelineActionRole77C3F3D5",
+          "Arn"
+         ]
+        }
+       ]
       }
      ],
      "Version": "2012-10-17"
@@ -233,6 +241,44 @@
        }
       ],
       "Name": "Build"
+     },
+     {
+      "Actions": [
+       {
+        "ActionTypeId": {
+         "Category": "Deploy",
+         "Owner": "AWS",
+         "Provider": "CloudFormation",
+         "Version": "1"
+        },
+        "Configuration": {
+         "StackName": "PipelineStack",
+         "Capabilities": "CAPABILITY_NAMED_IAM",
+         "RoleArn": {
+          "Fn::GetAtt": [
+           "PipelineCDKPipelineUpdateCDKPipelineUpdateRoleA23A901A",
+           "Arn"
+          ]
+         },
+         "ActionMode": "CREATE_UPDATE",
+         "TemplatePath": "CDK-Demo-Build-Output::PipelineStack.template.json"
+        },
+        "InputArtifacts": [
+         {
+          "Name": "CDK-Demo-Build-Output"
+         }
+        ],
+        "Name": "CDK-Pipeline-Update",
+        "RoleArn": {
+         "Fn::GetAtt": [
+          "PipelineCDKPipelineUpdateCDKPipelineUpdateCodePipelineActionRole77C3F3D5",
+          "Arn"
+         ]
+        },
+        "RunOrder": 1
+       }
+      ],
+      "Name": "CDK_Pipeline_Update"
      }
     ],
     "ArtifactStore": {
@@ -341,6 +387,206 @@
    },
    "Metadata": {
     "aws:cdk:path": "PipelineStack/Pipeline/Build/CDK-Build/CodePipelineActionRole/DefaultPolicy/Resource"
+   }
+  },
+  "PipelineCDKPipelineUpdateCDKPipelineUpdateCodePipelineActionRole77C3F3D5": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":iam::",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":root"
+          ]
+         ]
+        }
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "PipelineStack/Pipeline/CDK_Pipeline_Update/CDK-Pipeline-Update/CodePipelineActionRole/Resource"
+   }
+  },
+  "PipelineCDKPipelineUpdateCDKPipelineUpdateCodePipelineActionRoleDefaultPolicy6F96C7C5": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "iam:PassRole",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "PipelineCDKPipelineUpdateCDKPipelineUpdateRoleA23A901A",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": [
+        "s3:GetBucket*",
+        "s3:GetObject*",
+        "s3:List*"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "PipelineArtifactsBucket22248F97",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "PipelineArtifactsBucket22248F97",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "cloudformation:CreateStack",
+        "cloudformation:DescribeStack*",
+        "cloudformation:GetStackPolicy",
+        "cloudformation:GetTemplate*",
+        "cloudformation:SetStackPolicy",
+        "cloudformation:UpdateStack",
+        "cloudformation:ValidateTemplate"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":cloudformation:",
+          {
+           "Ref": "AWS::Region"
+          },
+          ":",
+          {
+           "Ref": "AWS::AccountId"
+          },
+          ":stack/PipelineStack/*"
+         ]
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "PipelineCDKPipelineUpdateCDKPipelineUpdateCodePipelineActionRoleDefaultPolicy6F96C7C5",
+    "Roles": [
+     {
+      "Ref": "PipelineCDKPipelineUpdateCDKPipelineUpdateCodePipelineActionRole77C3F3D5"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "PipelineStack/Pipeline/CDK_Pipeline_Update/CDK-Pipeline-Update/CodePipelineActionRole/DefaultPolicy/Resource"
+   }
+  },
+  "PipelineCDKPipelineUpdateCDKPipelineUpdateRoleA23A901A": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "cloudformation.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "PipelineStack/Pipeline/CDK_Pipeline_Update/CDK-Pipeline-Update/Role/Resource"
+   }
+  },
+  "PipelineCDKPipelineUpdateCDKPipelineUpdateRoleDefaultPolicy92D99D3B": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "s3:GetBucket*",
+        "s3:GetObject*",
+        "s3:List*"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "PipelineArtifactsBucket22248F97",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "PipelineArtifactsBucket22248F97",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": "*",
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "PipelineCDKPipelineUpdateCDKPipelineUpdateRoleDefaultPolicy92D99D3B",
+    "Roles": [
+     {
+      "Ref": "PipelineCDKPipelineUpdateCDKPipelineUpdateRoleA23A901A"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "PipelineStack/Pipeline/CDK_Pipeline_Update/CDK-Pipeline-Update/Role/DefaultPolicy/Resource"
    }
   },
   "CdkBuildProjectRoleE0B6FEB0": {

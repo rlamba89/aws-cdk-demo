@@ -23,7 +23,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/3ce4d3b0852983a9f67568d04bcc9e94d85b6c27f5155758138602b699437799.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/2933d1f4b1bfa0d4405a913b90e44dc999037c718ef5abcf30033764e914ec5a.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -85,6 +85,30 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "PipelineBuildCDKBuildCodePipelineActionRoleDefaultPolicy0BFA6CD6"
+          }
+        ],
+        "/PipelineStack/Pipeline/CDK_Pipeline_Update/CDK-Pipeline-Update/CodePipelineActionRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineCDKPipelineUpdateCDKPipelineUpdateCodePipelineActionRole77C3F3D5"
+          }
+        ],
+        "/PipelineStack/Pipeline/CDK_Pipeline_Update/CDK-Pipeline-Update/CodePipelineActionRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineCDKPipelineUpdateCDKPipelineUpdateCodePipelineActionRoleDefaultPolicy6F96C7C5"
+          }
+        ],
+        "/PipelineStack/Pipeline/CDK_Pipeline_Update/CDK-Pipeline-Update/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineCDKPipelineUpdateCDKPipelineUpdateRoleA23A901A"
+          }
+        ],
+        "/PipelineStack/Pipeline/CDK_Pipeline_Update/CDK-Pipeline-Update/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineCDKPipelineUpdateCDKPipelineUpdateRoleDefaultPolicy92D99D3B"
           }
         ],
         "/PipelineStack/CdkBuildProject/Role/Resource": [

@@ -32,7 +32,7 @@ export class PipelineStack extends Stack {
         new GitHubSourceAction({
           owner: "rlamba89",
           repo: "express-lambda",
-          branch: "master",
+          branch: "main",
           actionName: "CDK-Demo-Service-Source",
           oauthToken: SecretValue.secretsManager("aws_github_cdk_demo"),
           output: cdkServiceSourceOutput,

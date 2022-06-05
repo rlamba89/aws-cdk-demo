@@ -636,7 +636,7 @@ Object {
                   "Version": "1",
                 },
                 "Configuration": Object {
-                  "Branch": "master",
+                  "Branch": "main",
                   "OAuthToken": "{{resolve:secretsmanager:aws_github_cdk_demo:SecretString:::}}",
                   "Owner": "rlamba89",
                   "PollForSourceChanges": false,

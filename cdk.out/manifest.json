@@ -23,7 +23,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/2933d1f4b1bfa0d4405a913b90e44dc999037c718ef5abcf30033764e914ec5a.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e7255878534795fed8f7a4aea7276c65e632a0366bea03c89ee5d0bbb686c141.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -75,6 +75,12 @@
             "data": "PipelineSourceCDKDemoPipelineSourceWebhookResourceD8F9DB0C"
           }
         ],
+        "/PipelineStack/Pipeline/Source/CDK-Demo-Service-Source/WebhookResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineSourceCDKDemoServiceSourceWebhookResource6D0E83CB"
+          }
+        ],
         "/PipelineStack/Pipeline/Build/CDK-Build/CodePipelineActionRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
@@ -87,28 +93,28 @@
             "data": "PipelineBuildCDKBuildCodePipelineActionRoleDefaultPolicy0BFA6CD6"
           }
         ],
-        "/PipelineStack/Pipeline/CDK_Pipeline_Update/CDK-Pipeline-Update/CodePipelineActionRole/Resource": [
+        "/PipelineStack/Pipeline/Pipeline_Update/CDK-Pipeline-Update/CodePipelineActionRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "PipelineCDKPipelineUpdateCDKPipelineUpdateCodePipelineActionRole77C3F3D5"
+            "data": "PipelinePipelineUpdateCDKPipelineUpdateCodePipelineActionRole1CA4B64E"
           }
         ],
-        "/PipelineStack/Pipeline/CDK_Pipeline_Update/CDK-Pipeline-Update/CodePipelineActionRole/DefaultPolicy/Resource": [
+        "/PipelineStack/Pipeline/Pipeline_Update/CDK-Pipeline-Update/CodePipelineActionRole/DefaultPolicy/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "PipelineCDKPipelineUpdateCDKPipelineUpdateCodePipelineActionRoleDefaultPolicy6F96C7C5"
+            "data": "PipelinePipelineUpdateCDKPipelineUpdateCodePipelineActionRoleDefaultPolicyC1026872"
           }
         ],
-        "/PipelineStack/Pipeline/CDK_Pipeline_Update/CDK-Pipeline-Update/Role/Resource": [
+        "/PipelineStack/Pipeline/Pipeline_Update/CDK-Pipeline-Update/Role/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "PipelineCDKPipelineUpdateCDKPipelineUpdateRoleA23A901A"
+            "data": "PipelinePipelineUpdateCDKPipelineUpdateRoleB6D7B2B2"
           }
         ],
-        "/PipelineStack/Pipeline/CDK_Pipeline_Update/CDK-Pipeline-Update/Role/DefaultPolicy/Resource": [
+        "/PipelineStack/Pipeline/Pipeline_Update/CDK-Pipeline-Update/Role/DefaultPolicy/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "PipelineCDKPipelineUpdateCDKPipelineUpdateRoleDefaultPolicy92D99D3B"
+            "data": "PipelinePipelineUpdateCDKPipelineUpdateRoleDefaultPolicy9BC33D9D"
           }
         ],
         "/PipelineStack/CdkBuildProject/Role/Resource": [

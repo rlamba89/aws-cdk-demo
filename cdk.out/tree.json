@@ -213,7 +213,7 @@
                                     },
                                     {
                                       "Fn::GetAtt": [
-                                        "PipelineCDKPipelineUpdateCDKPipelineUpdateCodePipelineActionRole77C3F3D5",
+                                        "PipelinePipelineUpdateCDKPipelineUpdateCodePipelineActionRole1CA4B64E",
                                         "Arn"
                                       ]
                                     }
@@ -267,7 +267,7 @@
                             "name": "CDK-Demo-Pipeline-Source",
                             "outputArtifacts": [
                               {
-                                "name": "CDK-Demo-Source-Output"
+                                "name": "CDK-Demo-Pipeline-Source-Output"
                               }
                             ],
                             "actionTypeId": {
@@ -284,6 +284,28 @@
                               "PollForSourceChanges": false
                             },
                             "runOrder": 1
+                          },
+                          {
+                            "name": "CDK-Demo-Service-Source",
+                            "outputArtifacts": [
+                              {
+                                "name": "CDK-Demo-Service-Source-Output"
+                              }
+                            ],
+                            "actionTypeId": {
+                              "category": "Source",
+                              "version": "1",
+                              "owner": "ThirdParty",
+                              "provider": "GitHub"
+                            },
+                            "configuration": {
+                              "Owner": "rlamba89",
+                              "Repo": "express-lambda",
+                              "Branch": "master",
+                              "OAuthToken": "{{resolve:secretsmanager:aws_github_cdk_demo:SecretString:::}}",
+                              "PollForSourceChanges": false
+                            },
+                            "runOrder": 1
                           }
                         ]
                       },
@@ -294,7 +316,7 @@
                             "name": "CDK-Build",
                             "inputArtifacts": [
                               {
-                                "name": "CDK-Demo-Source-Output"
+                                "name": "CDK-Demo-Pipeline-Source-Output"
                               }
                             ],
                             "outputArtifacts": [
@@ -324,7 +346,7 @@
                         ]
                       },
                       {
-                        "name": "CDK_Pipeline_Update",
+                        "name": "Pipeline_Update",
                         "actions": [
                           {
                             "name": "CDK-Pipeline-Update",
@@ -344,7 +366,7 @@
                               "Capabilities": "CAPABILITY_NAMED_IAM",
                               "RoleArn": {
                                 "Fn::GetAtt": [
-                                  "PipelineCDKPipelineUpdateCDKPipelineUpdateRoleA23A901A",
+                                  "PipelinePipelineUpdateCDKPipelineUpdateRoleB6D7B2B2",
                                   "Arn"
                                 ]
                               },
@@ -354,7 +376,7 @@
                             "runOrder": 1,
                             "roleArn": {
                               "Fn::GetAtt": [
-                                "PipelineCDKPipelineUpdateCDKPipelineUpdateCodePipelineActionRole77C3F3D5",
+                                "PipelinePipelineUpdateCDKPipelineUpdateCodePipelineActionRole1CA4B64E",
                                 "Arn"
                               ]
                             }
@@ -401,6 +423,45 @@
                               }
                             ],
                             "targetAction": "CDK-Demo-Pipeline-Source",
+                            "targetPipeline": {
+                              "Ref": "PipelineC660917D"
+                            },
+                            "targetPipelineVersion": 1,
+                            "registerWithThirdParty": true
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_codepipeline.CfnWebhook",
+                          "version": "2.23.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "constructs.Construct",
+                      "version": "10.1.25"
+                    }
+                  },
+                  "CDK-Demo-Service-Source": {
+                    "id": "CDK-Demo-Service-Source",
+                    "path": "PipelineStack/Pipeline/Source/CDK-Demo-Service-Source",
+                    "children": {
+                      "WebhookResource": {
+                        "id": "WebhookResource",
+                        "path": "PipelineStack/Pipeline/Source/CDK-Demo-Service-Source/WebhookResource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::CodePipeline::Webhook",
+                          "aws:cdk:cloudformation:props": {
+                            "authentication": "GITHUB_HMAC",
+                            "authenticationConfiguration": {
+                              "secretToken": "{{resolve:secretsmanager:aws_github_cdk_demo:SecretString:::}}"
+                            },
+                            "filters": [
+                              {
+                                "jsonPath": "$.ref",
+                                "matchEquals": "refs/heads/{Branch}"
+                              }
+                            ],
+                            "targetAction": "CDK-Demo-Service-Source",
                             "targetPipeline": {
                               "Ref": "PipelineC660917D"
                             },
@@ -543,21 +604,21 @@
                   "version": "10.1.25"
                 }
               },
-              "CDK_Pipeline_Update": {
-                "id": "CDK_Pipeline_Update",
-                "path": "PipelineStack/Pipeline/CDK_Pipeline_Update",
+              "Pipeline_Update": {
+                "id": "Pipeline_Update",
+                "path": "PipelineStack/Pipeline/Pipeline_Update",
                 "children": {
                   "CDK-Pipeline-Update": {
                     "id": "CDK-Pipeline-Update",
-                    "path": "PipelineStack/Pipeline/CDK_Pipeline_Update/CDK-Pipeline-Update",
+                    "path": "PipelineStack/Pipeline/Pipeline_Update/CDK-Pipeline-Update",
                     "children": {
                       "CodePipelineActionRole": {
                         "id": "CodePipelineActionRole",
-                        "path": "PipelineStack/Pipeline/CDK_Pipeline_Update/CDK-Pipeline-Update/CodePipelineActionRole",
+                        "path": "PipelineStack/Pipeline/Pipeline_Update/CDK-Pipeline-Update/CodePipelineActionRole",
                         "children": {
                           "Resource": {
                             "id": "Resource",
-                            "path": "PipelineStack/Pipeline/CDK_Pipeline_Update/CDK-Pipeline-Update/CodePipelineActionRole/Resource",
+                            "path": "PipelineStack/Pipeline/Pipeline_Update/CDK-Pipeline-Update/CodePipelineActionRole/Resource",
                             "attributes": {
                               "aws:cdk:cloudformation:type": "AWS::IAM::Role",
                               "aws:cdk:cloudformation:props": {
@@ -597,7 +658,7 @@
                           },
                           "8389e75f-0810-4838-bf64-d6f85a95cf83": {
                             "id": "8389e75f-0810-4838-bf64-d6f85a95cf83",
-                            "path": "PipelineStack/Pipeline/CDK_Pipeline_Update/CDK-Pipeline-Update/CodePipelineActionRole/8389e75f-0810-4838-bf64-d6f85a95cf83",
+                            "path": "PipelineStack/Pipeline/Pipeline_Update/CDK-Pipeline-Update/CodePipelineActionRole/8389e75f-0810-4838-bf64-d6f85a95cf83",
                             "constructInfo": {
                               "fqn": "constructs.Construct",
                               "version": "10.1.25"
@@ -605,11 +666,11 @@
                           },
                           "DefaultPolicy": {
                             "id": "DefaultPolicy",
-                            "path": "PipelineStack/Pipeline/CDK_Pipeline_Update/CDK-Pipeline-Update/CodePipelineActionRole/DefaultPolicy",
+                            "path": "PipelineStack/Pipeline/Pipeline_Update/CDK-Pipeline-Update/CodePipelineActionRole/DefaultPolicy",
                             "children": {
                               "Resource": {
                                 "id": "Resource",
-                                "path": "PipelineStack/Pipeline/CDK_Pipeline_Update/CDK-Pipeline-Update/CodePipelineActionRole/DefaultPolicy/Resource",
+                                "path": "PipelineStack/Pipeline/Pipeline_Update/CDK-Pipeline-Update/CodePipelineActionRole/DefaultPolicy/Resource",
                                 "attributes": {
                                   "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
                                   "aws:cdk:cloudformation:props": {
@@ -620,7 +681,7 @@
                                           "Effect": "Allow",
                                           "Resource": {
                                             "Fn::GetAtt": [
-                                              "PipelineCDKPipelineUpdateCDKPipelineUpdateRoleA23A901A",
+                                              "PipelinePipelineUpdateCDKPipelineUpdateRoleB6D7B2B2",
                                               "Arn"
                                             ]
                                           }
@@ -690,10 +751,10 @@
                                       ],
                                       "Version": "2012-10-17"
                                     },
-                                    "policyName": "PipelineCDKPipelineUpdateCDKPipelineUpdateCodePipelineActionRoleDefaultPolicy6F96C7C5",
+                                    "policyName": "PipelinePipelineUpdateCDKPipelineUpdateCodePipelineActionRoleDefaultPolicyC1026872",
                                     "roles": [
                                       {
-                                        "Ref": "PipelineCDKPipelineUpdateCDKPipelineUpdateCodePipelineActionRole77C3F3D5"
+                                        "Ref": "PipelinePipelineUpdateCDKPipelineUpdateCodePipelineActionRole1CA4B64E"
                                       }
                                     ]
                                   }
@@ -717,11 +778,11 @@
                       },
                       "Role": {
                         "id": "Role",
-                        "path": "PipelineStack/Pipeline/CDK_Pipeline_Update/CDK-Pipeline-Update/Role",
+                        "path": "PipelineStack/Pipeline/Pipeline_Update/CDK-Pipeline-Update/Role",
                         "children": {
                           "Resource": {
                             "id": "Resource",
-                            "path": "PipelineStack/Pipeline/CDK_Pipeline_Update/CDK-Pipeline-Update/Role/Resource",
+                            "path": "PipelineStack/Pipeline/Pipeline_Update/CDK-Pipeline-Update/Role/Resource",
                             "attributes": {
                               "aws:cdk:cloudformation:type": "AWS::IAM::Role",
                               "aws:cdk:cloudformation:props": {
@@ -746,11 +807,11 @@
                           },
                           "DefaultPolicy": {
                             "id": "DefaultPolicy",
-                            "path": "PipelineStack/Pipeline/CDK_Pipeline_Update/CDK-Pipeline-Update/Role/DefaultPolicy",
+                            "path": "PipelineStack/Pipeline/Pipeline_Update/CDK-Pipeline-Update/Role/DefaultPolicy",
                             "children": {
                               "Resource": {
                                 "id": "Resource",
-                                "path": "PipelineStack/Pipeline/CDK_Pipeline_Update/CDK-Pipeline-Update/Role/DefaultPolicy/Resource",
+                                "path": "PipelineStack/Pipeline/Pipeline_Update/CDK-Pipeline-Update/Role/DefaultPolicy/Resource",
                                 "attributes": {
                                   "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
                                   "aws:cdk:cloudformation:props": {
@@ -794,10 +855,10 @@
                                       ],
                                       "Version": "2012-10-17"
                                     },
-                                    "policyName": "PipelineCDKPipelineUpdateCDKPipelineUpdateRoleDefaultPolicy92D99D3B",
+                                    "policyName": "PipelinePipelineUpdateCDKPipelineUpdateRoleDefaultPolicy9BC33D9D",
                                     "roles": [
                                       {
-                                        "Ref": "PipelineCDKPipelineUpdateCDKPipelineUpdateRoleA23A901A"
+                                        "Ref": "PipelinePipelineUpdateCDKPipelineUpdateRoleB6D7B2B2"
                                       }
                                     ]
                                   }

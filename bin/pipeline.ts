@@ -16,4 +16,6 @@ const pipeline = new PipelineStack(app, 'PipelineStack', {});
 
 const serviceStack = new ServerStack(app, "CDK-Lambda-Stack-Staging")
 
-pipeline.addServiceStage(serviceStack, "Staging");
+pipeline.addServiceStage(serviceStack, "Staging", false);
+
+pipeline.addServiceStage(serviceStack, "Production", true);

@@ -1,7 +1,7 @@
 import { SecretValue, Stack, StackProps } from 'aws-cdk-lib';
 import { BuildSpec, LinuxBuildImage, PipelineProject } from 'aws-cdk-lib/aws-codebuild';
 import {  Pipeline, Artifact } from "aws-cdk-lib/aws-codepipeline";
-import { CloudFormationCreateUpdateStackAction, CodeBuildAction, GitHubSourceAction } from 'aws-cdk-lib/aws-codepipeline-actions';
+import { CloudFormationCreateUpdateStackAction, CodeBuildAction, GitHubSourceAction, ManualApprovalAction} from 'aws-cdk-lib/aws-codepipeline-actions';
 import { Construct } from 'constructs';
 import { ServerStack } from './server-stack';
 
@@ -91,8 +91,8 @@ export class PipelineStack extends Stack {
     })
   }
 
-  public addServiceStage(serviceStack: ServerStack, stageName:string){
-    this.pipeline.addStage({
+  public addServiceStage(serviceStack: ServerStack, stageName:string, isApprovalRequired:boolean){
+   var stage = this.pipeline.addStage({
       stageName:stageName,
       actions:[
         new CloudFormationCreateUpdateStackAction({
@@ -107,5 +107,14 @@ export class PipelineStack extends Stack {
         })
       ]
     })
+
+    if(isApprovalRequired){
+      const manualApprovalAction = new ManualApprovalAction({
+        actionName: 'Approve',
+      });
+
+      stage.addAction(manualApprovalAction);
+
+     }
   }
 }

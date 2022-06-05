@@ -8,7 +8,7 @@ test('Pipeline test', () =>{
     //when
     const stack = new PipelineStack(app, 'MyTestPipelineStack')
     
-    const template = Template.fromStack(stack);
-    console.log(template)
+    const template = Template.fromStack(stack)
+    
     expect(template).toMatchSnapshot();
 });

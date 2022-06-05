@@ -23,7 +23,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/1c6bd3b28ee0fe523fcee1fbfca555924527745c58b3deab91646196d4189b61.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/ec5f84244ef0569bfb151556515fbcd34eccdfb1887257d4ff0e813ad190d049.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -151,6 +151,36 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "PipelineStagingCDKServiceDeployRoleDefaultPolicyAD2A761E"
+          }
+        ],
+        "/PipelineStack/Pipeline/Production/CDK-Service-Deploy/CodePipelineActionRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineProductionCDKServiceDeployCodePipelineActionRole6ACB73D2"
+          }
+        ],
+        "/PipelineStack/Pipeline/Production/CDK-Service-Deploy/CodePipelineActionRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineProductionCDKServiceDeployCodePipelineActionRoleDefaultPolicy9699DC99"
+          }
+        ],
+        "/PipelineStack/Pipeline/Production/CDK-Service-Deploy/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineProductionCDKServiceDeployRole61101CD0"
+          }
+        ],
+        "/PipelineStack/Pipeline/Production/CDK-Service-Deploy/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineProductionCDKServiceDeployRoleDefaultPolicyD96C6AC9"
+          }
+        ],
+        "/PipelineStack/Pipeline/Production/Approve/CodePipelineActionRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineProductionApproveCodePipelineActionRole4AFBF294"
           }
         ],
         "/PipelineStack/CdkBuildProject/Role/Resource": [

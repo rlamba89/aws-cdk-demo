@@ -11,7 +11,8 @@ export class PipelineStack extends Stack {
 
     const pipeline = new Pipeline(this, 'Pipeline',{
       pipelineName:'CDK-Demo-Pipeline',
-      crossAccountKeys:false
+      crossAccountKeys:false,
+      restartExecutionOnUpdate:true
     });
 
     const cdkPipelineSourceOutput =  new Artifact('CDK-Demo-Pipeline-Source-Output')
@@ -65,7 +66,7 @@ export class PipelineStack extends Stack {
             environment:{
               buildImage:LinuxBuildImage.STANDARD_5_0
             },
-            buildSpec:BuildSpec.fromSourceFilename('build-specs/cdk-service-build-spec-yml')
+            buildSpec:BuildSpec.fromSourceFilename('build-specs/cdk-service-build-spec.yml')
           })
         })
 

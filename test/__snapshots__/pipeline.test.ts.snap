@@ -223,7 +223,7 @@ Object {
           ],
         },
         "Source": Object {
-          "BuildSpec": "build-specs/cdk-service-build-spec-yml",
+          "BuildSpec": "build-specs/cdk-service-build-spec.yml",
           "Type": "CODEPIPELINE",
         },
       },
@@ -596,6 +596,7 @@ Object {
           "Type": "S3",
         },
         "Name": "CDK-Demo-Pipeline",
+        "RestartExecutionOnUpdate": true,
         "RoleArn": Object {
           "Fn::GetAtt": Array [
             "PipelineRoleD68726F7",

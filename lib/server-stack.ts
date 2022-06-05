@@ -5,11 +5,15 @@ import { HttpApi } from "@aws-cdk/aws-apigatewayv2-alpha";
 import { HttpLambdaIntegration} from "@aws-cdk/aws-apigatewayv2-integrations-alpha";
 
 
+interface ServerStackProps extends StackProps{
+    StageName :string
+}
+
 export class ServerStack extends Stack {
     
     public readonly serviceCode:CfnParametersCode;
 
-    constructor(scope:Construct, id: string, props?:StackProps){
+    constructor(scope:Construct, id: string, props?:ServerStackProps){
         super(scope, id, props)
 
          this.serviceCode = Code.fromCfnParameters()
@@ -23,7 +27,7 @@ export class ServerStack extends Stack {
 
          const httpApi = new HttpApi(this, 'ServiceAPI', {
              defaultIntegration : new HttpLambdaIntegration("LambdaIntegration",lambda),
-             apiName:"MyService-CDkDemo"
+             apiName:`MyService-CDkDemo-${props?.StageName}`
          });
     }
 }

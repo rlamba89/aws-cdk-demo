@@ -409,7 +409,7 @@
          "Version": "1"
         },
         "Configuration": {
-         "StackName": "CDK-Lambda-Stack-Staging",
+         "StackName": "CDK-Lambda-Stack-Production",
          "Capabilities": "CAPABILITY_NAMED_IAM",
          "RoleArn": {
           "Fn::GetAtt": [
@@ -419,7 +419,7 @@
          },
          "ParameterOverrides": "{\"FunctionLambdaSourceBucketNameParameter9E9E108F\":{\"Fn::GetArtifactAtt\":[\"CDK-Demo-Service-Build-Output\",\"BucketName\"]},\"FunctionLambdaSourceObjectKeyParameter1C7AED11\":{\"Fn::GetArtifactAtt\":[\"CDK-Demo-Service-Build-Output\",\"ObjectKey\"]}}",
          "ActionMode": "CREATE_UPDATE",
-         "TemplatePath": "CDK-Demo-Build-Output::CDK-Lambda-Stack-Staging.template.json"
+         "TemplatePath": "CDK-Demo-Build-Output::CDK-Lambda-Stack-Production.template.json"
         },
         "InputArtifacts": [
          {
@@ -1166,7 +1166,7 @@
           {
            "Ref": "AWS::AccountId"
           },
-          ":stack/CDK-Lambda-Stack-Staging/*"
+          ":stack/CDK-Lambda-Stack-Production/*"
          ]
         ]
        }

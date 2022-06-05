@@ -31,7 +31,7 @@
     ]
    },
    "Metadata": {
-    "aws:cdk:path": "CDK-Lambda-Stack-Staging/Function/ServiceRole/Resource"
+    "aws:cdk:path": "CDK-Lambda-Stack-Production/Function/ServiceRole/Resource"
    }
   },
   "Function76856677": {
@@ -59,17 +59,17 @@
     "FunctionServiceRole675BB04A"
    ],
    "Metadata": {
-    "aws:cdk:path": "CDK-Lambda-Stack-Staging/Function/Resource"
+    "aws:cdk:path": "CDK-Lambda-Stack-Production/Function/Resource"
    }
   },
   "ServiceAPI3C3FEA49": {
    "Type": "AWS::ApiGatewayV2::Api",
    "Properties": {
-    "Name": "MyService-CDkDemo-Staging",
+    "Name": "MyService-CDkDemo-Production",
     "ProtocolType": "HTTP"
    },
    "Metadata": {
-    "aws:cdk:path": "CDK-Lambda-Stack-Staging/ServiceAPI/Resource"
+    "aws:cdk:path": "CDK-Lambda-Stack-Production/ServiceAPI/Resource"
    }
   },
   "ServiceAPIDefaultRouteLambdaIntegration272FCB85": {
@@ -88,7 +88,7 @@
     "PayloadFormatVersion": "2.0"
    },
    "Metadata": {
-    "aws:cdk:path": "CDK-Lambda-Stack-Staging/ServiceAPI/DefaultRoute/LambdaIntegration/Resource"
+    "aws:cdk:path": "CDK-Lambda-Stack-Production/ServiceAPI/DefaultRoute/LambdaIntegration/Resource"
    }
   },
   "ServiceAPIDefaultRouteLambdaIntegrationPermission3A65B617": {
@@ -128,7 +128,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "CDK-Lambda-Stack-Staging/ServiceAPI/DefaultRoute/LambdaIntegration-Permission"
+    "aws:cdk:path": "CDK-Lambda-Stack-Production/ServiceAPI/DefaultRoute/LambdaIntegration-Permission"
    }
   },
   "ServiceAPIDefaultRouteB19188BE": {
@@ -152,7 +152,7 @@
     }
    },
    "Metadata": {
-    "aws:cdk:path": "CDK-Lambda-Stack-Staging/ServiceAPI/DefaultRoute/Resource"
+    "aws:cdk:path": "CDK-Lambda-Stack-Production/ServiceAPI/DefaultRoute/Resource"
    }
   },
   "ServiceAPIDefaultStageD3D272D3": {
@@ -165,7 +165,7 @@
     "AutoDeploy": true
    },
    "Metadata": {
-    "aws:cdk:path": "CDK-Lambda-Stack-Staging/ServiceAPI/DefaultStage/Resource"
+    "aws:cdk:path": "CDK-Lambda-Stack-Production/ServiceAPI/DefaultStage/Resource"
    }
   },
   "CDKMetadata": {
@@ -174,7 +174,7 @@
     "Analytics": "v2:deflate64:H4sIAAAAAAAA/02PTQ6CMBCFz+IeRsSNS42J0Z3BA5gRRhylLWkHjWm4u23VhNWbn9f3TUsol+CLGb5cXjePvOML+JNg/cjC6Ow7VJcGwe8GXQsbnW2velofySp2LnRjxqjAV6ajuIg6Zthzi0IvfD9L8GG86TluD1qotfhPqcwg6VUgtzSOKRktKhKyyUDODLZOnq3RDUsiFjl2/Q2hmK1/H5hHnVJ/Dr8X6SM86hcXq+kdsf/ztWkI7m7+XKxgGeLvjjm3gxZWBNVXP02Astw7AQAA"
    },
    "Metadata": {
-    "aws:cdk:path": "CDK-Lambda-Stack-Staging/CDKMetadata/Default"
+    "aws:cdk:path": "CDK-Lambda-Stack-Production/CDKMetadata/Default"
    },
    "Condition": "CDKMetadataAvailable"
   }

@@ -23,7 +23,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e7255878534795fed8f7a4aea7276c65e632a0366bea03c89ee5d0bbb686c141.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/cfcbb983dff8ff92daefee103abb6b6b0869ad5c5f460c2f076f9c8991db992f.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -93,6 +93,18 @@
             "data": "PipelineBuildCDKBuildCodePipelineActionRoleDefaultPolicy0BFA6CD6"
           }
         ],
+        "/PipelineStack/Pipeline/Build/CDK-Service-Build/CodePipelineActionRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineBuildCDKServiceBuildCodePipelineActionRoleFE70C4D8"
+          }
+        ],
+        "/PipelineStack/Pipeline/Build/CDK-Service-Build/CodePipelineActionRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineBuildCDKServiceBuildCodePipelineActionRoleDefaultPolicy2A9FBB97"
+          }
+        ],
         "/PipelineStack/Pipeline/Pipeline_Update/CDK-Pipeline-Update/CodePipelineActionRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
@@ -133,6 +145,24 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "CdkBuildProject9382C38D"
+          }
+        ],
+        "/PipelineStack/CdkServiceBuildProject/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CdkServiceBuildProjectRole9D6C051B"
+          }
+        ],
+        "/PipelineStack/CdkServiceBuildProject/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CdkServiceBuildProjectRoleDefaultPolicyAC5C2D59"
+          }
+        ],
+        "/PipelineStack/CdkServiceBuildProject/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CdkServiceBuildProject22B4D558"
           }
         ],
         "/PipelineStack/CDKMetadata/Default": [

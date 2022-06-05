@@ -149,6 +149,12 @@
         },
         {
          "Fn::GetAtt": [
+          "PipelineBuildCDKServiceBuildCodePipelineActionRoleFE70C4D8",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::GetAtt": [
           "PipelinePipelineUpdateCDKPipelineUpdateCodePipelineActionRole1CA4B64E",
           "Arn"
          ]
@@ -213,7 +219,7 @@
         "Configuration": {
          "Owner": "rlamba89",
          "Repo": "express-lambda",
-         "Branch": "master",
+         "Branch": "main",
          "OAuthToken": "{{resolve:secretsmanager:aws_github_cdk_demo:SecretString:::}}",
          "PollForSourceChanges": false
         },
@@ -256,6 +262,37 @@
         "RoleArn": {
          "Fn::GetAtt": [
           "PipelineBuildCDKBuildCodePipelineActionRoleF76A3E0C",
+          "Arn"
+         ]
+        },
+        "RunOrder": 1
+       },
+       {
+        "ActionTypeId": {
+         "Category": "Build",
+         "Owner": "AWS",
+         "Provider": "CodeBuild",
+         "Version": "1"
+        },
+        "Configuration": {
+         "ProjectName": {
+          "Ref": "CdkServiceBuildProject22B4D558"
+         }
+        },
+        "InputArtifacts": [
+         {
+          "Name": "CDK-Demo-Service-Source-Output"
+         }
+        ],
+        "Name": "CDK-Service-Build",
+        "OutputArtifacts": [
+         {
+          "Name": "CDK-Demo-Service-Build-Output"
+         }
+        ],
+        "RoleArn": {
+         "Fn::GetAtt": [
+          "PipelineBuildCDKServiceBuildCodePipelineActionRoleFE70C4D8",
           "Arn"
          ]
         },
@@ -309,7 +346,8 @@
      },
      "Type": "S3"
     },
-    "Name": "CDK-Demo-Pipeline"
+    "Name": "CDK-Demo-Pipeline",
+    "RestartExecutionOnUpdate": true
    },
    "DependsOn": [
     "PipelineRoleDefaultPolicyC7A05455",
@@ -433,6 +471,74 @@
    },
    "Metadata": {
     "aws:cdk:path": "PipelineStack/Pipeline/Build/CDK-Build/CodePipelineActionRole/DefaultPolicy/Resource"
+   }
+  },
+  "PipelineBuildCDKServiceBuildCodePipelineActionRoleFE70C4D8": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":iam::",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":root"
+          ]
+         ]
+        }
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "PipelineStack/Pipeline/Build/CDK-Service-Build/CodePipelineActionRole/Resource"
+   }
+  },
+  "PipelineBuildCDKServiceBuildCodePipelineActionRoleDefaultPolicy2A9FBB97": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "codebuild:BatchGetBuilds",
+        "codebuild:StartBuild",
+        "codebuild:StopBuild"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "CdkServiceBuildProject22B4D558",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "PipelineBuildCDKServiceBuildCodePipelineActionRoleDefaultPolicy2A9FBB97",
+    "Roles": [
+     {
+      "Ref": "PipelineBuildCDKServiceBuildCodePipelineActionRoleFE70C4D8"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "PipelineStack/Pipeline/Build/CDK-Service-Build/CodePipelineActionRole/DefaultPolicy/Resource"
    }
   },
   "PipelinePipelineUpdateCDKPipelineUpdateCodePipelineActionRole1CA4B64E": {
@@ -832,6 +938,205 @@
    },
    "Metadata": {
     "aws:cdk:path": "PipelineStack/CdkBuildProject/Resource"
+   }
+  },
+  "CdkServiceBuildProjectRole9D6C051B": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "codebuild.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "PipelineStack/CdkServiceBuildProject/Role/Resource"
+   }
+  },
+  "CdkServiceBuildProjectRoleDefaultPolicyAC5C2D59": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":logs:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":log-group:/aws/codebuild/",
+           {
+            "Ref": "CdkServiceBuildProject22B4D558"
+           },
+           ":*"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":logs:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":log-group:/aws/codebuild/",
+           {
+            "Ref": "CdkServiceBuildProject22B4D558"
+           }
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "codebuild:BatchPutCodeCoverages",
+        "codebuild:BatchPutTestCases",
+        "codebuild:CreateReport",
+        "codebuild:CreateReportGroup",
+        "codebuild:UpdateReport"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":codebuild:",
+          {
+           "Ref": "AWS::Region"
+          },
+          ":",
+          {
+           "Ref": "AWS::AccountId"
+          },
+          ":report-group/",
+          {
+           "Ref": "CdkServiceBuildProject22B4D558"
+          },
+          "-*"
+         ]
+        ]
+       }
+      },
+      {
+       "Action": [
+        "s3:Abort*",
+        "s3:DeleteObject*",
+        "s3:GetBucket*",
+        "s3:GetObject*",
+        "s3:List*",
+        "s3:PutObject",
+        "s3:PutObjectLegalHold",
+        "s3:PutObjectRetention",
+        "s3:PutObjectTagging",
+        "s3:PutObjectVersionTagging"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "PipelineArtifactsBucket22248F97",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "PipelineArtifactsBucket22248F97",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "CdkServiceBuildProjectRoleDefaultPolicyAC5C2D59",
+    "Roles": [
+     {
+      "Ref": "CdkServiceBuildProjectRole9D6C051B"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "PipelineStack/CdkServiceBuildProject/Role/DefaultPolicy/Resource"
+   }
+  },
+  "CdkServiceBuildProject22B4D558": {
+   "Type": "AWS::CodeBuild::Project",
+   "Properties": {
+    "Artifacts": {
+     "Type": "CODEPIPELINE"
+    },
+    "Environment": {
+     "ComputeType": "BUILD_GENERAL1_SMALL",
+     "Image": "aws/codebuild/standard:5.0",
+     "ImagePullCredentialsType": "CODEBUILD",
+     "PrivilegedMode": false,
+     "Type": "LINUX_CONTAINER"
+    },
+    "ServiceRole": {
+     "Fn::GetAtt": [
+      "CdkServiceBuildProjectRole9D6C051B",
+      "Arn"
+     ]
+    },
+    "Source": {
+     "BuildSpec": "build-specs/cdk-service-build-spec.yml",
+     "Type": "CODEPIPELINE"
+    },
+    "Cache": {
+     "Type": "NO_CACHE"
+    },
+    "EncryptionKey": "alias/aws/s3"
+   },
+   "Metadata": {
+    "aws:cdk:path": "PipelineStack/CdkServiceBuildProject/Resource"
    }
   },
   "CDKMetadata": {

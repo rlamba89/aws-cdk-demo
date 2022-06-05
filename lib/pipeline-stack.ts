@@ -100,6 +100,7 @@ export class PipelineStack extends Stack {
     if(isApprovalRequired){
       const manualApprovalAction = new ManualApprovalAction({
         actionName: 'Approve',
+        runOrder : 1
       });
       stage.addAction(manualApprovalAction);
      }
@@ -112,7 +113,8 @@ export class PipelineStack extends Stack {
       parameterOverrides:{
         ...serviceStack.serviceCode.assign(this.cdkServiceBuildOutput.s3Location)
       },
-      extraInputs:[this.cdkServiceBuildOutput]
+      extraInputs:[this.cdkServiceBuildOutput],
+      runOrder : 2
     }));
   }
 

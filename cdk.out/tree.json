@@ -484,6 +484,22 @@
                         "name": "Production",
                         "actions": [
                           {
+                            "name": "Approve",
+                            "actionTypeId": {
+                              "category": "Approval",
+                              "version": "1",
+                              "owner": "AWS",
+                              "provider": "Manual"
+                            },
+                            "runOrder": 1,
+                            "roleArn": {
+                              "Fn::GetAtt": [
+                                "PipelineProductionApproveCodePipelineActionRole4AFBF294",
+                                "Arn"
+                              ]
+                            }
+                          },
+                          {
                             "name": "CDK-Service-Deploy",
                             "inputArtifacts": [
                               {
@@ -516,22 +532,6 @@
                             "roleArn": {
                               "Fn::GetAtt": [
                                 "PipelineProductionCDKServiceDeployCodePipelineActionRole6ACB73D2",
-                                "Arn"
-                              ]
-                            }
-                          },
-                          {
-                            "name": "Approve",
-                            "actionTypeId": {
-                              "category": "Approval",
-                              "version": "1",
-                              "owner": "AWS",
-                              "provider": "Manual"
-                            },
-                            "runOrder": 1,
-                            "roleArn": {
-                              "Fn::GetAtt": [
-                                "PipelineProductionApproveCodePipelineActionRole4AFBF294",
                                 "Arn"
                               ]
                             }
@@ -1448,6 +1448,66 @@
                 "id": "Production",
                 "path": "PipelineStack/Pipeline/Production",
                 "children": {
+                  "Approve": {
+                    "id": "Approve",
+                    "path": "PipelineStack/Pipeline/Production/Approve",
+                    "children": {
+                      "CodePipelineActionRole": {
+                        "id": "CodePipelineActionRole",
+                        "path": "PipelineStack/Pipeline/Production/Approve/CodePipelineActionRole",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "PipelineStack/Pipeline/Production/Approve/CodePipelineActionRole/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                              "aws:cdk:cloudformation:props": {
+                                "assumeRolePolicyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "sts:AssumeRole",
+                                      "Effect": "Allow",
+                                      "Principal": {
+                                        "AWS": {
+                                          "Fn::Join": [
+                                            "",
+                                            [
+                                              "arn:",
+                                              {
+                                                "Ref": "AWS::Partition"
+                                              },
+                                              ":iam::",
+                                              {
+                                                "Ref": "AWS::AccountId"
+                                              },
+                                              ":root"
+                                            ]
+                                          ]
+                                        }
+                                      }
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                              "version": "2.23.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Role",
+                          "version": "2.23.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "constructs.Construct",
+                      "version": "10.1.25"
+                    }
+                  },
                   "CDK-Service-Deploy": {
                     "id": "CDK-Service-Deploy",
                     "path": "PipelineStack/Pipeline/Production/CDK-Service-Deploy",
@@ -1711,66 +1771,6 @@
                             },
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_iam.Policy",
-                              "version": "2.23.0"
-                            }
-                          }
-                        },
-                        "constructInfo": {
-                          "fqn": "aws-cdk-lib.aws_iam.Role",
-                          "version": "2.23.0"
-                        }
-                      }
-                    },
-                    "constructInfo": {
-                      "fqn": "constructs.Construct",
-                      "version": "10.1.25"
-                    }
-                  },
-                  "Approve": {
-                    "id": "Approve",
-                    "path": "PipelineStack/Pipeline/Production/Approve",
-                    "children": {
-                      "CodePipelineActionRole": {
-                        "id": "CodePipelineActionRole",
-                        "path": "PipelineStack/Pipeline/Production/Approve/CodePipelineActionRole",
-                        "children": {
-                          "Resource": {
-                            "id": "Resource",
-                            "path": "PipelineStack/Pipeline/Production/Approve/CodePipelineActionRole/Resource",
-                            "attributes": {
-                              "aws:cdk:cloudformation:type": "AWS::IAM::Role",
-                              "aws:cdk:cloudformation:props": {
-                                "assumeRolePolicyDocument": {
-                                  "Statement": [
-                                    {
-                                      "Action": "sts:AssumeRole",
-                                      "Effect": "Allow",
-                                      "Principal": {
-                                        "AWS": {
-                                          "Fn::Join": [
-                                            "",
-                                            [
-                                              "arn:",
-                                              {
-                                                "Ref": "AWS::Partition"
-                                              },
-                                              ":iam::",
-                                              {
-                                                "Ref": "AWS::AccountId"
-                                              },
-                                              ":root"
-                                            ]
-                                          ]
-                                        }
-                                      }
-                                    }
-                                  ],
-                                  "Version": "2012-10-17"
-                                }
-                              }
-                            },
-                            "constructInfo": {
-                              "fqn": "aws-cdk-lib.aws_iam.CfnRole",
                               "version": "2.23.0"
                             }
                           }
@@ -2420,6 +2420,58 @@
                   "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
                   "version": "2.23.0"
                 }
+              },
+              "FunctionUrl": {
+                "id": "FunctionUrl",
+                "path": "CDK-Lambda-Stack-Staging/Function-Staging/FunctionUrl",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "CDK-Lambda-Stack-Staging/Function-Staging/FunctionUrl/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::Url",
+                      "aws:cdk:cloudformation:props": {
+                        "authType": "NONE",
+                        "targetFunctionArn": {
+                          "Fn::GetAtt": [
+                            "FunctionStaging1785DE28",
+                            "Arn"
+                          ]
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnUrl",
+                      "version": "2.23.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.FunctionUrl",
+                  "version": "2.23.0"
+                }
+              },
+              "invoke-function-url": {
+                "id": "invoke-function-url",
+                "path": "CDK-Lambda-Stack-Staging/Function-Staging/invoke-function-url",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                  "aws:cdk:cloudformation:props": {
+                    "action": "lambda:InvokeFunctionUrl",
+                    "functionName": {
+                      "Fn::GetAtt": [
+                        "FunctionStaging1785DE28",
+                        "Arn"
+                      ]
+                    },
+                    "principal": "*",
+                    "functionUrlAuthType": "NONE"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                  "version": "2.23.0"
+                }
               }
             },
             "constructInfo": {
@@ -2598,6 +2650,14 @@
               "version": "2.23.0-alpha.0"
             }
           },
+          "LambdaUrl": {
+            "id": "LambdaUrl",
+            "path": "CDK-Lambda-Stack-Staging/LambdaUrl",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.23.0"
+            }
+          },
           "CDKMetadata": {
             "id": "CDKMetadata",
             "path": "CDK-Lambda-Stack-Staging/CDKMetadata",
@@ -2730,6 +2790,58 @@
                 },
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.23.0"
+                }
+              },
+              "FunctionUrl": {
+                "id": "FunctionUrl",
+                "path": "CDK-Lambda-Stack-Production/Function-Production/FunctionUrl",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "CDK-Lambda-Stack-Production/Function-Production/FunctionUrl/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::Url",
+                      "aws:cdk:cloudformation:props": {
+                        "authType": "NONE",
+                        "targetFunctionArn": {
+                          "Fn::GetAtt": [
+                            "FunctionProductionBE080D84",
+                            "Arn"
+                          ]
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnUrl",
+                      "version": "2.23.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.FunctionUrl",
+                  "version": "2.23.0"
+                }
+              },
+              "invoke-function-url": {
+                "id": "invoke-function-url",
+                "path": "CDK-Lambda-Stack-Production/Function-Production/invoke-function-url",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                  "aws:cdk:cloudformation:props": {
+                    "action": "lambda:InvokeFunctionUrl",
+                    "functionName": {
+                      "Fn::GetAtt": [
+                        "FunctionProductionBE080D84",
+                        "Arn"
+                      ]
+                    },
+                    "principal": "*",
+                    "functionUrlAuthType": "NONE"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
                   "version": "2.23.0"
                 }
               }
@@ -2908,6 +3020,14 @@
             "constructInfo": {
               "fqn": "@aws-cdk/aws-apigatewayv2-alpha.HttpApi",
               "version": "2.23.0-alpha.0"
+            }
+          },
+          "LambdaUrl": {
+            "id": "LambdaUrl",
+            "path": "CDK-Lambda-Stack-Production/LambdaUrl",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.23.0"
             }
           },
           "CDKMetadata": {

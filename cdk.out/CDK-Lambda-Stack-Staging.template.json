@@ -62,6 +62,38 @@
     "aws:cdk:path": "CDK-Lambda-Stack-Staging/Function-Staging/Resource"
    }
   },
+  "FunctionStagingFunctionUrl84D01EC0": {
+   "Type": "AWS::Lambda::Url",
+   "Properties": {
+    "AuthType": "NONE",
+    "TargetFunctionArn": {
+     "Fn::GetAtt": [
+      "FunctionStaging1785DE28",
+      "Arn"
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CDK-Lambda-Stack-Staging/Function-Staging/FunctionUrl/Resource"
+   }
+  },
+  "FunctionStaginginvokefunctionurlDA704652": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunctionUrl",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "FunctionStaging1785DE28",
+      "Arn"
+     ]
+    },
+    "Principal": "*",
+    "FunctionUrlAuthType": "NONE"
+   },
+   "Metadata": {
+    "aws:cdk:path": "CDK-Lambda-Stack-Staging/Function-Staging/invoke-function-url"
+   }
+  },
   "ServiceAPI3C3FEA49": {
    "Type": "AWS::ApiGatewayV2::Api",
    "Properties": {
@@ -171,7 +203,7 @@
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/02PTQ6CMBCFz+IeRsSNS42J0Z3BA5gRRhylLWkHjWm4u23VhNWbn9f3TUsol+CLGb5cXjePvOML+JNg/cjC6Ow7VJcGwe8GXQsbnW2velofySp2LnRjxqjAV6ajuIg6Zthzi0IvfD9L8GG86TluD1qotfhPqcwg6VUgtzSOKRktKhKyyUDODLZOnq3RDUsiFjl2/Q2hmK1/H5hHnVJ/Dr8X6SM86hcXq+kdsf/ztWkI7m7+XKxgGeLvjjm3gxZWBNVXP02Astw7AQAA"
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/01Py07DMBD8lt6TbUgvHEGVED2BgjijbbKEbf2I7HUrZOXfsd0E9TSzs+OdcQvtDmKzwauv++FcKz5C/BDsz1WSvqJCfRwQ4kswvbA11f7b/POVfDqV9QXeyWn2PulzxaghdlZRXmScK5x4RKEr/l5aiEl+njhvD0ZodLiGdDZIeZXKjDTP5TI61CTk8vAWZApSrORtcH1x760ZWEp2U6OafhCazdPyu23G+/zFEV9Fplwj4y04s/tGeV6bGDsQnPz28vAIu3T+5JlrF4ywJuhu+Afs8EhNWAEAAA=="
    },
    "Metadata": {
     "aws:cdk:path": "CDK-Lambda-Stack-Staging/CDKMetadata/Default"
@@ -190,6 +222,17 @@
    "Type": "AWS::SSM::Parameter::Value<String>",
    "Default": "/cdk-bootstrap/hnb659fds/version",
    "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Outputs": {
+  "LambdaUrl": {
+   "Description": "lambda url",
+   "Value": {
+    "Fn::GetAtt": [
+     "FunctionStagingFunctionUrl84D01EC0",
+     "FunctionUrl"
+    ]
+   }
   }
  },
  "Conditions": {

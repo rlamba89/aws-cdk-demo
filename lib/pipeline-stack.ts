@@ -1,7 +1,6 @@
-import { pipelines, SecretValue, Stack, StackProps } from 'aws-cdk-lib';
+import { SecretValue, Stack, StackProps, Stage } from 'aws-cdk-lib';
 import { BuildSpec, LinuxBuildImage, PipelineProject } from 'aws-cdk-lib/aws-codebuild';
-import {  Pipeline, Artifact } from "aws-cdk-lib/aws-codepipeline";
-import {  CodePipelineSource, ManualApprovalStep} from "aws-cdk-lib/pipelines";
+import {  Pipeline, Artifact, IStage, Action } from "aws-cdk-lib/aws-codepipeline";
 
 import { CloudFormationCreateUpdateStackAction, CodeBuildAction, GitHubSourceAction, ManualApprovalAction} from 'aws-cdk-lib/aws-codepipeline-actions';
 import { Construct } from 'constructs';
@@ -94,31 +93,27 @@ export class PipelineStack extends Stack {
   }
 
   public addServiceStage(serviceStack: ServerStack, stageName:string, isApprovalRequired:boolean){
-   
     var stage = this.pipeline.addStage({
       stageName:stageName,
-      
-      actions:[
-        new CloudFormationCreateUpdateStackAction({
-          actionName:'CDK-Service-Deploy',
-          stackName: serviceStack.stackName,
-          templatePath:this.cdkBuildOutput.atPath(`${serviceStack.stackName}.template.json`),
-          adminPermissions:true,
-          parameterOverrides:{
-            ...serviceStack.serviceCode.assign(this.cdkServiceBuildOutput.s3Location)
-          },
-          extraInputs:[this.cdkServiceBuildOutput]
-        })
-      ]
     })
 
     if(isApprovalRequired){
       const manualApprovalAction = new ManualApprovalAction({
         actionName: 'Approve',
       });
-
       stage.addAction(manualApprovalAction);
-
      }
+
+     stage.addAction(new CloudFormationCreateUpdateStackAction({
+      actionName:'CDK-Service-Deploy',
+      stackName: serviceStack.stackName,
+      templatePath:this.cdkBuildOutput.atPath(`${serviceStack.stackName}.template.json`),
+      adminPermissions:true,
+      parameterOverrides:{
+        ...serviceStack.serviceCode.assign(this.cdkServiceBuildOutput.s3Location)
+      },
+      extraInputs:[this.cdkServiceBuildOutput]
+    }));
   }
+
 }

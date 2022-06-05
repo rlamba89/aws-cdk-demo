@@ -1,7 +1,7 @@
 {
   "version": "18.0.0",
   "files": {
-    "2dce1efe4d2a192256687643cc716afbc2fc06ec7fb9b2fcd03b0a4f83d0bc41": {
+    "3efdab3c483b4967eafdd5672eefedb378c454394b69a64ddb87f30af797a2b2": {
       "source": {
         "path": "CDK-Lambda-Stack-Production.template.json",
         "packaging": "file"
@@ -9,7 +9,7 @@
       "destinations": {
         "current_account-current_region": {
           "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
-          "objectKey": "2dce1efe4d2a192256687643cc716afbc2fc06ec7fb9b2fcd03b0a4f83d0bc41.json",
+          "objectKey": "3efdab3c483b4967eafdd5672eefedb378c454394b69a64ddb87f30af797a2b2.json",
           "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
         }
       }

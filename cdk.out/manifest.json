@@ -23,7 +23,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/cfcbb983dff8ff92daefee103abb6b6b0869ad5c5f460c2f076f9c8991db992f.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/1c6bd3b28ee0fe523fcee1fbfca555924527745c58b3deab91646196d4189b61.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -129,6 +129,30 @@
             "data": "PipelinePipelineUpdateCDKPipelineUpdateRoleDefaultPolicy9BC33D9D"
           }
         ],
+        "/PipelineStack/Pipeline/Staging/CDK-Service-Deploy/CodePipelineActionRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineStagingCDKServiceDeployCodePipelineActionRole475552DC"
+          }
+        ],
+        "/PipelineStack/Pipeline/Staging/CDK-Service-Deploy/CodePipelineActionRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineStagingCDKServiceDeployCodePipelineActionRoleDefaultPolicy814CBD15"
+          }
+        ],
+        "/PipelineStack/Pipeline/Staging/CDK-Service-Deploy/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineStagingCDKServiceDeployRoleA32AD4BE"
+          }
+        ],
+        "/PipelineStack/Pipeline/Staging/CDK-Service-Deploy/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PipelineStagingCDKServiceDeployRoleDefaultPolicyAD2A761E"
+          }
+        ],
         "/PipelineStack/CdkBuildProject/Role/Resource": [
           {
             "type": "aws:cdk:logicalId",
@@ -191,6 +215,119 @@
         ]
       },
       "displayName": "PipelineStack"
+    },
+    "CDK-Lambda-Stack-Staging.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "CDK-Lambda-Stack-Staging.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "CDK-Lambda-Stack-Staging": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "CDK-Lambda-Stack-Staging.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/8c5c03c475bab2a7bdb4655d0f1d7c73ec7fe42217acb7f92bddab5ceb80197e.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "CDK-Lambda-Stack-Staging.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "CDK-Lambda-Stack-Staging.assets"
+      ],
+      "metadata": {
+        "/CDK-Lambda-Stack-Staging/Function/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FunctionServiceRole675BB04A"
+          }
+        ],
+        "/CDK-Lambda-Stack-Staging/Function/LambdaSourceBucketNameParameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FunctionLambdaSourceBucketNameParameter9E9E108F"
+          }
+        ],
+        "/CDK-Lambda-Stack-Staging/Function/LambdaSourceObjectKeyParameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FunctionLambdaSourceObjectKeyParameter1C7AED11"
+          }
+        ],
+        "/CDK-Lambda-Stack-Staging/Function/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Function76856677"
+          }
+        ],
+        "/CDK-Lambda-Stack-Staging/ServiceAPI/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServiceAPI3C3FEA49"
+          }
+        ],
+        "/CDK-Lambda-Stack-Staging/ServiceAPI/DefaultRoute/LambdaIntegration/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServiceAPIDefaultRouteLambdaIntegration272FCB85"
+          }
+        ],
+        "/CDK-Lambda-Stack-Staging/ServiceAPI/DefaultRoute/LambdaIntegration-Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServiceAPIDefaultRouteLambdaIntegrationPermission3A65B617"
+          }
+        ],
+        "/CDK-Lambda-Stack-Staging/ServiceAPI/DefaultRoute/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServiceAPIDefaultRouteB19188BE"
+          }
+        ],
+        "/CDK-Lambda-Stack-Staging/ServiceAPI/DefaultStage/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServiceAPIDefaultStageD3D272D3"
+          }
+        ],
+        "/CDK-Lambda-Stack-Staging/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/CDK-Lambda-Stack-Staging/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/CDK-Lambda-Stack-Staging/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/CDK-Lambda-Stack-Staging/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "CDK-Lambda-Stack-Staging"
     }
   }
 }

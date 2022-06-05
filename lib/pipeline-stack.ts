@@ -3,13 +3,18 @@ import { BuildSpec, LinuxBuildImage, PipelineProject } from 'aws-cdk-lib/aws-cod
 import {  Pipeline, Artifact } from "aws-cdk-lib/aws-codepipeline";
 import { CloudFormationCreateUpdateStackAction, CodeBuildAction, GitHubSourceAction } from 'aws-cdk-lib/aws-codepipeline-actions';
 import { Construct } from 'constructs';
+import { ServerStack } from './server-stack';
 
 
 export class PipelineStack extends Stack {
+  private readonly pipeline :Pipeline;
+  private readonly cdkBuildOutput:Artifact;
+  private readonly cdkServiceBuildOutput:Artifact;
+
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    const pipeline = new Pipeline(this, 'Pipeline',{
+    this.pipeline = new Pipeline(this, 'Pipeline',{
       pipelineName:'CDK-Demo-Pipeline',
       crossAccountKeys:false,
       restartExecutionOnUpdate:true,
@@ -18,7 +23,7 @@ export class PipelineStack extends Stack {
     const cdkPipelineSourceOutput =  new Artifact('CDK-Demo-Pipeline-Source-Output')
     const cdkServiceSourceOutput = new Artifact('CDK-Demo-Service-Source-Output')
 
-    pipeline.addStage({
+    this.pipeline.addStage({
       stageName: "Source",
       actions: [
         new GitHubSourceAction({
@@ -40,17 +45,17 @@ export class PipelineStack extends Stack {
       ],
     });
 
-    const cdkBuildOutput = new Artifact('CDK-Demo-Build-Output')
-    const cdkServiceBuildOutput = new Artifact('CDK-Demo-Service-Build-Output')
+    this.cdkBuildOutput = new Artifact('CDK-Demo-Build-Output')
+    this.cdkServiceBuildOutput = new Artifact('CDK-Demo-Service-Build-Output')
 
 
-    pipeline.addStage({
+    this.pipeline.addStage({
       stageName: 'Build',
       actions:[
         new CodeBuildAction({
           actionName:'CDK-Build',
           input:cdkPipelineSourceOutput,
-          outputs:[cdkBuildOutput],
+          outputs:[this.cdkBuildOutput],
           project:new PipelineProject(this, 'CdkBuildProject',{
             environment:{
               buildImage:LinuxBuildImage.STANDARD_5_0
@@ -61,8 +66,8 @@ export class PipelineStack extends Stack {
         new CodeBuildAction({
           actionName:'CDK-Service-Build',
           input:cdkServiceSourceOutput,
-          outputs:[cdkServiceBuildOutput],
-          project:new PipelineProject(this, 'CdkServiceBuild',{
+          outputs:[this.cdkServiceBuildOutput],
+          project:new PipelineProject(this, 'CdkServiceBuildProject',{
             environment:{
               buildImage:LinuxBuildImage.STANDARD_5_0
             },
@@ -73,14 +78,32 @@ export class PipelineStack extends Stack {
       ]
     })
 
-    pipeline.addStage({
+    this.pipeline.addStage({
       stageName:'Pipeline_Update',
       actions:[
         new CloudFormationCreateUpdateStackAction({
           actionName:'CDK-Pipeline-Update',
           stackName:'PipelineStack',
-          templatePath:cdkBuildOutput.atPath('PipelineStack.template.json'),
+          templatePath:this.cdkBuildOutput.atPath('PipelineStack.template.json'),
           adminPermissions:true
+        })
+      ]
+    })
+  }
+
+  public addServiceStage(serviceStack: ServerStack, stageName:string){
+    this.pipeline.addStage({
+      stageName:stageName,
+      actions:[
+        new CloudFormationCreateUpdateStackAction({
+          actionName:'CDK-Service-Deploy',
+          stackName: serviceStack.stackName,
+          templatePath:this.cdkBuildOutput.atPath(`${serviceStack.stackName}.template.json`),
+          adminPermissions:true,
+          parameterOverrides:{
+            ...serviceStack.serviceCode.assign(this.cdkServiceBuildOutput.s3Location)
+          },
+          extraInputs:[this.cdkServiceBuildOutput]
         })
       ]
     })

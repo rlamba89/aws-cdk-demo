@@ -18,15 +18,15 @@ export class ServerStack extends Stack {
 
          this.serviceCode = Code.fromCfnParameters()
 
-        var lambda =new Function(this, 'Function', {
+        var lambda =new Function(this, `Function-${props?.StageName}`, {
             runtime: Runtime.NODEJS_14_X,
             handler: 'source/lambda.handler',
             code: this.serviceCode,
-            functionName : 'ServiceLambda-CDKDemo'
+            functionName : `ServiceLambda-CDKDemo-${props?.StageName}`
          });
 
          const httpApi = new HttpApi(this, 'ServiceAPI', {
-             defaultIntegration : new HttpLambdaIntegration("LambdaIntegration",lambda),
+             defaultIntegration : new HttpLambdaIntegration(`LambdaIntegration-${props?.StageName}`,lambda),
              apiName:`MyService-CDkDemo-${props?.StageName}`
          });
     }

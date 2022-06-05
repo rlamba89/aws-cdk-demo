@@ -466,7 +466,7 @@
                                   "Arn"
                                 ]
                               },
-                              "ParameterOverrides": "{\"FunctionLambdaSourceBucketNameParameter9E9E108F\":{\"Fn::GetArtifactAtt\":[\"CDK-Demo-Service-Build-Output\",\"BucketName\"]},\"FunctionLambdaSourceObjectKeyParameter1C7AED11\":{\"Fn::GetArtifactAtt\":[\"CDK-Demo-Service-Build-Output\",\"ObjectKey\"]}}",
+                              "ParameterOverrides": "{\"FunctionStagingLambdaSourceBucketNameParameter9934F974\":{\"Fn::GetArtifactAtt\":[\"CDK-Demo-Service-Build-Output\",\"BucketName\"]},\"FunctionStagingLambdaSourceObjectKeyParameter9D29163A\":{\"Fn::GetArtifactAtt\":[\"CDK-Demo-Service-Build-Output\",\"ObjectKey\"]}}",
                               "ActionMode": "CREATE_UPDATE",
                               "TemplatePath": "CDK-Demo-Build-Output::CDK-Lambda-Stack-Staging.template.json"
                             },
@@ -508,7 +508,7 @@
                                   "Arn"
                                 ]
                               },
-                              "ParameterOverrides": "{\"FunctionLambdaSourceBucketNameParameter9E9E108F\":{\"Fn::GetArtifactAtt\":[\"CDK-Demo-Service-Build-Output\",\"BucketName\"]},\"FunctionLambdaSourceObjectKeyParameter1C7AED11\":{\"Fn::GetArtifactAtt\":[\"CDK-Demo-Service-Build-Output\",\"ObjectKey\"]}}",
+                              "ParameterOverrides": "{\"FunctionProductionLambdaSourceBucketNameParameterECE0E4FA\":{\"Fn::GetArtifactAtt\":[\"CDK-Demo-Service-Build-Output\",\"BucketName\"]},\"FunctionProductionLambdaSourceObjectKeyParameter376DB144\":{\"Fn::GetArtifactAtt\":[\"CDK-Demo-Service-Build-Output\",\"ObjectKey\"]}}",
                               "ActionMode": "CREATE_UPDATE",
                               "TemplatePath": "CDK-Demo-Build-Output::CDK-Lambda-Stack-Production.template.json"
                             },
@@ -2322,17 +2322,17 @@
         "id": "CDK-Lambda-Stack-Staging",
         "path": "CDK-Lambda-Stack-Staging",
         "children": {
-          "Function": {
-            "id": "Function",
-            "path": "CDK-Lambda-Stack-Staging/Function",
+          "Function-Staging": {
+            "id": "Function-Staging",
+            "path": "CDK-Lambda-Stack-Staging/Function-Staging",
             "children": {
               "ServiceRole": {
                 "id": "ServiceRole",
-                "path": "CDK-Lambda-Stack-Staging/Function/ServiceRole",
+                "path": "CDK-Lambda-Stack-Staging/Function-Staging/ServiceRole",
                 "children": {
                   "Resource": {
                     "id": "Resource",
-                    "path": "CDK-Lambda-Stack-Staging/Function/ServiceRole/Resource",
+                    "path": "CDK-Lambda-Stack-Staging/Function-Staging/ServiceRole/Resource",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::IAM::Role",
                       "aws:cdk:cloudformation:props": {
@@ -2377,7 +2377,7 @@
               },
               "LambdaSourceBucketNameParameter": {
                 "id": "LambdaSourceBucketNameParameter",
-                "path": "CDK-Lambda-Stack-Staging/Function/LambdaSourceBucketNameParameter",
+                "path": "CDK-Lambda-Stack-Staging/Function-Staging/LambdaSourceBucketNameParameter",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.CfnParameter",
                   "version": "2.23.0"
@@ -2385,7 +2385,7 @@
               },
               "LambdaSourceObjectKeyParameter": {
                 "id": "LambdaSourceObjectKeyParameter",
-                "path": "CDK-Lambda-Stack-Staging/Function/LambdaSourceObjectKeyParameter",
+                "path": "CDK-Lambda-Stack-Staging/Function-Staging/LambdaSourceObjectKeyParameter",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.CfnParameter",
                   "version": "2.23.0"
@@ -2393,25 +2393,25 @@
               },
               "Resource": {
                 "id": "Resource",
-                "path": "CDK-Lambda-Stack-Staging/Function/Resource",
+                "path": "CDK-Lambda-Stack-Staging/Function-Staging/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
                   "aws:cdk:cloudformation:props": {
                     "code": {
                       "s3Bucket": {
-                        "Ref": "FunctionLambdaSourceBucketNameParameter9E9E108F"
+                        "Ref": "FunctionStagingLambdaSourceBucketNameParameter9934F974"
                       },
                       "s3Key": {
-                        "Ref": "FunctionLambdaSourceObjectKeyParameter1C7AED11"
+                        "Ref": "FunctionStagingLambdaSourceObjectKeyParameter9D29163A"
                       }
                     },
                     "role": {
                       "Fn::GetAtt": [
-                        "FunctionServiceRole675BB04A",
+                        "FunctionStagingServiceRoleA512FBD7",
                         "Arn"
                       ]
                     },
-                    "functionName": "ServiceLambda-CDKDemo",
+                    "functionName": "ServiceLambda-CDKDemo-Staging",
                     "handler": "source/lambda.handler",
                     "runtime": "nodejs14.x"
                   }
@@ -2450,13 +2450,13 @@
                 "id": "DefaultRoute",
                 "path": "CDK-Lambda-Stack-Staging/ServiceAPI/DefaultRoute",
                 "children": {
-                  "LambdaIntegration": {
-                    "id": "LambdaIntegration",
-                    "path": "CDK-Lambda-Stack-Staging/ServiceAPI/DefaultRoute/LambdaIntegration",
+                  "LambdaIntegration-Staging": {
+                    "id": "LambdaIntegration-Staging",
+                    "path": "CDK-Lambda-Stack-Staging/ServiceAPI/DefaultRoute/LambdaIntegration-Staging",
                     "children": {
                       "Resource": {
                         "id": "Resource",
-                        "path": "CDK-Lambda-Stack-Staging/ServiceAPI/DefaultRoute/LambdaIntegration/Resource",
+                        "path": "CDK-Lambda-Stack-Staging/ServiceAPI/DefaultRoute/LambdaIntegration-Staging/Resource",
                         "attributes": {
                           "aws:cdk:cloudformation:type": "AWS::ApiGatewayV2::Integration",
                           "aws:cdk:cloudformation:props": {
@@ -2466,7 +2466,7 @@
                             "integrationType": "AWS_PROXY",
                             "integrationUri": {
                               "Fn::GetAtt": [
-                                "Function76856677",
+                                "FunctionStaging1785DE28",
                                 "Arn"
                               ]
                             },
@@ -2484,16 +2484,16 @@
                       "version": "2.23.0-alpha.0"
                     }
                   },
-                  "LambdaIntegration-Permission": {
-                    "id": "LambdaIntegration-Permission",
-                    "path": "CDK-Lambda-Stack-Staging/ServiceAPI/DefaultRoute/LambdaIntegration-Permission",
+                  "LambdaIntegration-Staging-Permission": {
+                    "id": "LambdaIntegration-Staging-Permission",
+                    "path": "CDK-Lambda-Stack-Staging/ServiceAPI/DefaultRoute/LambdaIntegration-Staging-Permission",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
                       "aws:cdk:cloudformation:props": {
                         "action": "lambda:InvokeFunction",
                         "functionName": {
                           "Fn::GetAtt": [
-                            "Function76856677",
+                            "FunctionStaging1785DE28",
                             "Arn"
                           ]
                         },
@@ -2546,7 +2546,7 @@
                             [
                               "integrations/",
                               {
-                                "Ref": "ServiceAPIDefaultRouteLambdaIntegration272FCB85"
+                                "Ref": "ServiceAPIDefaultRouteLambdaIntegrationStaging3F8C3F13"
                               }
                             ]
                           ]
@@ -2634,17 +2634,17 @@
         "id": "CDK-Lambda-Stack-Production",
         "path": "CDK-Lambda-Stack-Production",
         "children": {
-          "Function": {
-            "id": "Function",
-            "path": "CDK-Lambda-Stack-Production/Function",
+          "Function-Production": {
+            "id": "Function-Production",
+            "path": "CDK-Lambda-Stack-Production/Function-Production",
             "children": {
               "ServiceRole": {
                 "id": "ServiceRole",
-                "path": "CDK-Lambda-Stack-Production/Function/ServiceRole",
+                "path": "CDK-Lambda-Stack-Production/Function-Production/ServiceRole",
                 "children": {
                   "Resource": {
                     "id": "Resource",
-                    "path": "CDK-Lambda-Stack-Production/Function/ServiceRole/Resource",
+                    "path": "CDK-Lambda-Stack-Production/Function-Production/ServiceRole/Resource",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::IAM::Role",
                       "aws:cdk:cloudformation:props": {
@@ -2689,7 +2689,7 @@
               },
               "LambdaSourceBucketNameParameter": {
                 "id": "LambdaSourceBucketNameParameter",
-                "path": "CDK-Lambda-Stack-Production/Function/LambdaSourceBucketNameParameter",
+                "path": "CDK-Lambda-Stack-Production/Function-Production/LambdaSourceBucketNameParameter",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.CfnParameter",
                   "version": "2.23.0"
@@ -2697,7 +2697,7 @@
               },
               "LambdaSourceObjectKeyParameter": {
                 "id": "LambdaSourceObjectKeyParameter",
-                "path": "CDK-Lambda-Stack-Production/Function/LambdaSourceObjectKeyParameter",
+                "path": "CDK-Lambda-Stack-Production/Function-Production/LambdaSourceObjectKeyParameter",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.CfnParameter",
                   "version": "2.23.0"
@@ -2705,25 +2705,25 @@
               },
               "Resource": {
                 "id": "Resource",
-                "path": "CDK-Lambda-Stack-Production/Function/Resource",
+                "path": "CDK-Lambda-Stack-Production/Function-Production/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
                   "aws:cdk:cloudformation:props": {
                     "code": {
                       "s3Bucket": {
-                        "Ref": "FunctionLambdaSourceBucketNameParameter9E9E108F"
+                        "Ref": "FunctionProductionLambdaSourceBucketNameParameterECE0E4FA"
                       },
                       "s3Key": {
-                        "Ref": "FunctionLambdaSourceObjectKeyParameter1C7AED11"
+                        "Ref": "FunctionProductionLambdaSourceObjectKeyParameter376DB144"
                       }
                     },
                     "role": {
                       "Fn::GetAtt": [
-                        "FunctionServiceRole675BB04A",
+                        "FunctionProductionServiceRole8A22AB41",
                         "Arn"
                       ]
                     },
-                    "functionName": "ServiceLambda-CDKDemo",
+                    "functionName": "ServiceLambda-CDKDemo-Production",
                     "handler": "source/lambda.handler",
                     "runtime": "nodejs14.x"
                   }
@@ -2762,13 +2762,13 @@
                 "id": "DefaultRoute",
                 "path": "CDK-Lambda-Stack-Production/ServiceAPI/DefaultRoute",
                 "children": {
-                  "LambdaIntegration": {
-                    "id": "LambdaIntegration",
-                    "path": "CDK-Lambda-Stack-Production/ServiceAPI/DefaultRoute/LambdaIntegration",
+                  "LambdaIntegration-Production": {
+                    "id": "LambdaIntegration-Production",
+                    "path": "CDK-Lambda-Stack-Production/ServiceAPI/DefaultRoute/LambdaIntegration-Production",
                     "children": {
                       "Resource": {
                         "id": "Resource",
-                        "path": "CDK-Lambda-Stack-Production/ServiceAPI/DefaultRoute/LambdaIntegration/Resource",
+                        "path": "CDK-Lambda-Stack-Production/ServiceAPI/DefaultRoute/LambdaIntegration-Production/Resource",
                         "attributes": {
                           "aws:cdk:cloudformation:type": "AWS::ApiGatewayV2::Integration",
                           "aws:cdk:cloudformation:props": {
@@ -2778,7 +2778,7 @@
                             "integrationType": "AWS_PROXY",
                             "integrationUri": {
                               "Fn::GetAtt": [
-                                "Function76856677",
+                                "FunctionProductionBE080D84",
                                 "Arn"
                               ]
                             },
@@ -2796,16 +2796,16 @@
                       "version": "2.23.0-alpha.0"
                     }
                   },
-                  "LambdaIntegration-Permission": {
-                    "id": "LambdaIntegration-Permission",
-                    "path": "CDK-Lambda-Stack-Production/ServiceAPI/DefaultRoute/LambdaIntegration-Permission",
+                  "LambdaIntegration-Production-Permission": {
+                    "id": "LambdaIntegration-Production-Permission",
+                    "path": "CDK-Lambda-Stack-Production/ServiceAPI/DefaultRoute/LambdaIntegration-Production-Permission",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
                       "aws:cdk:cloudformation:props": {
                         "action": "lambda:InvokeFunction",
                         "functionName": {
                           "Fn::GetAtt": [
-                            "Function76856677",
+                            "FunctionProductionBE080D84",
                             "Arn"
                           ]
                         },
@@ -2858,7 +2858,7 @@
                             [
                               "integrations/",
                               {
-                                "Ref": "ServiceAPIDefaultRouteLambdaIntegration272FCB85"
+                                "Ref": "ServiceAPIDefaultRouteLambdaIntegrationProduction849883B9"
                               }
                             ]
                           ]

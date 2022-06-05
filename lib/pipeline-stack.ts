@@ -1,6 +1,8 @@
-import { SecretValue, Stack, StackProps } from 'aws-cdk-lib';
+import { pipelines, SecretValue, Stack, StackProps } from 'aws-cdk-lib';
 import { BuildSpec, LinuxBuildImage, PipelineProject } from 'aws-cdk-lib/aws-codebuild';
 import {  Pipeline, Artifact } from "aws-cdk-lib/aws-codepipeline";
+import {  CodePipelineSource, ManualApprovalStep} from "aws-cdk-lib/pipelines";
+
 import { CloudFormationCreateUpdateStackAction, CodeBuildAction, GitHubSourceAction, ManualApprovalAction} from 'aws-cdk-lib/aws-codepipeline-actions';
 import { Construct } from 'constructs';
 import { ServerStack } from './server-stack';
@@ -92,8 +94,10 @@ export class PipelineStack extends Stack {
   }
 
   public addServiceStage(serviceStack: ServerStack, stageName:string, isApprovalRequired:boolean){
-   var stage = this.pipeline.addStage({
+   
+    var stage = this.pipeline.addStage({
       stageName:stageName,
+      
       actions:[
         new CloudFormationCreateUpdateStackAction({
           actionName:'CDK-Service-Deploy',

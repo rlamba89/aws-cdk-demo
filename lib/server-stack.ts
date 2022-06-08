@@ -4,6 +4,7 @@ import { Construct } from "constructs";
 import { HttpApi } from "@aws-cdk/aws-apigatewayv2-alpha";
 import { HttpLambdaIntegration} from "@aws-cdk/aws-apigatewayv2-integrations-alpha";
 import * as path from 'path';
+import { IBucket } from "aws-cdk-lib/aws-s3";
 
 interface ServerStackProps extends StackProps{
     StageName :string
@@ -11,12 +12,11 @@ interface ServerStackProps extends StackProps{
 
 export class ServerStack extends Stack {
     public readonly urlOutput: CfnOutput;
-    public readonly serviceCode:CfnParametersCode;
+    public readonly lambdaCode:CfnParametersCode;
 
     constructor(scope:Construct, id: string, props?:ServerStackProps){
         super(scope, id, props)
-        console.log(path.resolve(process.cwd(), 'lambda'))
-        
+       
         // var lambda =new Function(this, `Lambda-${props?.StageName}`, {
         //     runtime: Runtime.NODEJS_14_X,
         //     handler: 'lambda.handler',
@@ -30,11 +30,13 @@ export class ServerStack extends Stack {
         //     functionName : `ServiceLambda-CDKDemo-${props?.StageName}`
         //  });
 
-        var lambda =new Function(this, `Lambda-${props?.StageName}`, {
+        this.lambdaCode = Code.fromCfnParameters();
+
+        var lambda = new Function(this, `Lambda-${props?.StageName}`, {
             runtime: Runtime.NODEJS_14_X,
             handler: 'lambda.handler',
-            code: Code.fromAsset(path.resolve(process.cwd(), 'lambda')),
-            functionName : `ServiceLambda-CDKDemo-${props?.StageName}`
+            code: this.lambdaCode,
+            functionName : `Lambda-CDKDemo-${props?.StageName}`
          });
 
          const httpApi = new HttpApi(this, 'ServiceAPI', {

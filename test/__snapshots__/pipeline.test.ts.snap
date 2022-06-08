@@ -200,7 +200,7 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "CdkServiceBuildProject22B4D558": Object {
+    "LambdaBuildProject7E2DAB11": Object {
       "Properties": Object {
         "Artifacts": Object {
           "Type": "CODEPIPELINE",
@@ -218,18 +218,18 @@ Object {
         },
         "ServiceRole": Object {
           "Fn::GetAtt": Array [
-            "CdkServiceBuildProjectRole9D6C051B",
+            "LambdaBuildProjectRoleD0C4F982",
             "Arn",
           ],
         },
         "Source": Object {
-          "BuildSpec": "build-specs/cdk-service-build-spec.yml",
+          "BuildSpec": "build-specs/lambda-build-spec.yml",
           "Type": "CODEPIPELINE",
         },
       },
       "Type": "AWS::CodeBuild::Project",
     },
-    "CdkServiceBuildProjectRole9D6C051B": Object {
+    "LambdaBuildProjectRoleD0C4F982": Object {
       "Properties": Object {
         "AssumeRolePolicyDocument": Object {
           "Statement": Array [
@@ -246,7 +246,7 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "CdkServiceBuildProjectRoleDefaultPolicyAC5C2D59": Object {
+    "LambdaBuildProjectRoleDefaultPolicyA3A66624": Object {
       "Properties": Object {
         "PolicyDocument": Object {
           "Statement": Array [
@@ -276,7 +276,7 @@ Object {
                       },
                       ":log-group:/aws/codebuild/",
                       Object {
-                        "Ref": "CdkServiceBuildProject22B4D558",
+                        "Ref": "LambdaBuildProject7E2DAB11",
                       },
                     ],
                   ],
@@ -299,7 +299,7 @@ Object {
                       },
                       ":log-group:/aws/codebuild/",
                       Object {
-                        "Ref": "CdkServiceBuildProject22B4D558",
+                        "Ref": "LambdaBuildProject7E2DAB11",
                       },
                       ":*",
                     ],
@@ -334,7 +334,7 @@ Object {
                     },
                     ":report-group/",
                     Object {
-                      "Ref": "CdkServiceBuildProject22B4D558",
+                      "Ref": "LambdaBuildProject7E2DAB11",
                     },
                     "-*",
                   ],
@@ -381,10 +381,10 @@ Object {
           ],
           "Version": "2012-10-17",
         },
-        "PolicyName": "CdkServiceBuildProjectRoleDefaultPolicyAC5C2D59",
+        "PolicyName": "LambdaBuildProjectRoleDefaultPolicyA3A66624",
         "Roles": Array [
           Object {
-            "Ref": "CdkServiceBuildProjectRole9D6C051B",
+            "Ref": "LambdaBuildProjectRoleD0C4F982",
           },
         ],
       },
@@ -521,37 +521,7 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "PipelineBuildCDKServiceBuildCodePipelineActionRoleDefaultPolicy2A9FBB97": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": Array [
-                "codebuild:BatchGetBuilds",
-                "codebuild:StartBuild",
-                "codebuild:StopBuild",
-              ],
-              "Effect": "Allow",
-              "Resource": Object {
-                "Fn::GetAtt": Array [
-                  "CdkServiceBuildProject22B4D558",
-                  "Arn",
-                ],
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "PolicyName": "PipelineBuildCDKServiceBuildCodePipelineActionRoleDefaultPolicy2A9FBB97",
-        "Roles": Array [
-          Object {
-            "Ref": "PipelineBuildCDKServiceBuildCodePipelineActionRoleFE70C4D8",
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Policy",
-    },
-    "PipelineBuildCDKServiceBuildCodePipelineActionRoleFE70C4D8": Object {
+    "PipelineBuildLambdaBuildCodePipelineActionRole94BC7353": Object {
       "Properties": Object {
         "AssumeRolePolicyDocument": Object {
           "Statement": Array [
@@ -582,6 +552,36 @@ Object {
         },
       },
       "Type": "AWS::IAM::Role",
+    },
+    "PipelineBuildLambdaBuildCodePipelineActionRoleDefaultPolicy733B90FF": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "codebuild:BatchGetBuilds",
+                "codebuild:StartBuild",
+                "codebuild:StopBuild",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "LambdaBuildProject7E2DAB11",
+                  "Arn",
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "PipelineBuildLambdaBuildCodePipelineActionRoleDefaultPolicy733B90FF",
+        "Roles": Array [
+          Object {
+            "Ref": "PipelineBuildLambdaBuildCodePipelineActionRole94BC7353",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
     },
     "PipelineC660917D": Object {
       "DependsOn": Array [
@@ -624,28 +624,6 @@ Object {
                 "OutputArtifacts": Array [
                   Object {
                     "Name": "CDK-Demo-Pipeline-Source-Output",
-                  },
-                ],
-                "RunOrder": 1,
-              },
-              Object {
-                "ActionTypeId": Object {
-                  "Category": "Source",
-                  "Owner": "ThirdParty",
-                  "Provider": "GitHub",
-                  "Version": "1",
-                },
-                "Configuration": Object {
-                  "Branch": "main",
-                  "OAuthToken": "{{resolve:secretsmanager:aws_github_cdk_demo:SecretString:::}}",
-                  "Owner": "rlamba89",
-                  "PollForSourceChanges": false,
-                  "Repo": "express-lambda",
-                },
-                "Name": "CDK-Demo-Service-Source",
-                "OutputArtifacts": Array [
-                  Object {
-                    "Name": "CDK-Demo-Service-Source-Output",
                   },
                 ],
                 "RunOrder": 1,
@@ -695,15 +673,15 @@ Object {
                 },
                 "Configuration": Object {
                   "ProjectName": Object {
-                    "Ref": "CdkServiceBuildProject22B4D558",
+                    "Ref": "LambdaBuildProject7E2DAB11",
                   },
                 },
                 "InputArtifacts": Array [
                   Object {
-                    "Name": "CDK-Demo-Service-Source-Output",
+                    "Name": "CDK-Demo-Pipeline-Source-Output",
                   },
                 ],
-                "Name": "CDK-Service-Build",
+                "Name": "Lambda-Build",
                 "OutputArtifacts": Array [
                   Object {
                     "Name": "CDK-Demo-Service-Build-Output",
@@ -711,7 +689,7 @@ Object {
                 ],
                 "RoleArn": Object {
                   "Fn::GetAtt": Array [
-                    "PipelineBuildCDKServiceBuildCodePipelineActionRoleFE70C4D8",
+                    "PipelineBuildLambdaBuildCodePipelineActionRole94BC7353",
                     "Arn",
                   ],
                 },
@@ -734,7 +712,7 @@ Object {
                   "Capabilities": "CAPABILITY_NAMED_IAM",
                   "RoleArn": Object {
                     "Fn::GetAtt": Array [
-                      "PipelinePipelineUpdateCDKPipelineUpdateRoleB6D7B2B2",
+                      "PipelinePipelineUpdatePipelineUpdateRoleC024FEB0",
                       "Arn",
                     ],
                   },
@@ -746,10 +724,10 @@ Object {
                     "Name": "CDK-Demo-Build-Output",
                   },
                 ],
-                "Name": "CDK-Pipeline-Update",
+                "Name": "Pipeline-Update",
                 "RoleArn": Object {
                   "Fn::GetAtt": Array [
-                    "PipelinePipelineUpdateCDKPipelineUpdateCodePipelineActionRole1CA4B64E",
+                    "PipelinePipelineUpdatePipelineUpdateCodePipelineActionRole55089D01",
                     "Arn",
                   ],
                 },
@@ -762,7 +740,7 @@ Object {
       },
       "Type": "AWS::CodePipeline::Pipeline",
     },
-    "PipelinePipelineUpdateCDKPipelineUpdateCodePipelineActionRole1CA4B64E": Object {
+    "PipelinePipelineUpdatePipelineUpdateCodePipelineActionRole55089D01": Object {
       "Properties": Object {
         "AssumeRolePolicyDocument": Object {
           "Statement": Array [
@@ -794,7 +772,7 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "PipelinePipelineUpdateCDKPipelineUpdateCodePipelineActionRoleDefaultPolicyC1026872": Object {
+    "PipelinePipelineUpdatePipelineUpdateCodePipelineActionRoleDefaultPolicy83C64A65": Object {
       "Properties": Object {
         "PolicyDocument": Object {
           "Statement": Array [
@@ -803,7 +781,7 @@ Object {
               "Effect": "Allow",
               "Resource": Object {
                 "Fn::GetAtt": Array [
-                  "PipelinePipelineUpdateCDKPipelineUpdateRoleB6D7B2B2",
+                  "PipelinePipelineUpdatePipelineUpdateRoleC024FEB0",
                   "Arn",
                 ],
               },
@@ -873,16 +851,16 @@ Object {
           ],
           "Version": "2012-10-17",
         },
-        "PolicyName": "PipelinePipelineUpdateCDKPipelineUpdateCodePipelineActionRoleDefaultPolicyC1026872",
+        "PolicyName": "PipelinePipelineUpdatePipelineUpdateCodePipelineActionRoleDefaultPolicy83C64A65",
         "Roles": Array [
           Object {
-            "Ref": "PipelinePipelineUpdateCDKPipelineUpdateCodePipelineActionRole1CA4B64E",
+            "Ref": "PipelinePipelineUpdatePipelineUpdateCodePipelineActionRole55089D01",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "PipelinePipelineUpdateCDKPipelineUpdateRoleB6D7B2B2": Object {
+    "PipelinePipelineUpdatePipelineUpdateRoleC024FEB0": Object {
       "Properties": Object {
         "AssumeRolePolicyDocument": Object {
           "Statement": Array [
@@ -899,7 +877,7 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "PipelinePipelineUpdateCDKPipelineUpdateRoleDefaultPolicy9BC33D9D": Object {
+    "PipelinePipelineUpdatePipelineUpdateRoleDefaultPolicy1857F0DC": Object {
       "Properties": Object {
         "PolicyDocument": Object {
           "Statement": Array [
@@ -941,10 +919,10 @@ Object {
           ],
           "Version": "2012-10-17",
         },
-        "PolicyName": "PipelinePipelineUpdateCDKPipelineUpdateRoleDefaultPolicy9BC33D9D",
+        "PolicyName": "PipelinePipelineUpdatePipelineUpdateRoleDefaultPolicy1857F0DC",
         "Roles": Array [
           Object {
-            "Ref": "PipelinePipelineUpdateCDKPipelineUpdateRoleB6D7B2B2",
+            "Ref": "PipelinePipelineUpdatePipelineUpdateRoleC024FEB0",
           },
         ],
       },
@@ -1023,7 +1001,7 @@ Object {
               "Effect": "Allow",
               "Resource": Object {
                 "Fn::GetAtt": Array [
-                  "PipelineBuildCDKServiceBuildCodePipelineActionRoleFE70C4D8",
+                  "PipelineBuildLambdaBuildCodePipelineActionRole94BC7353",
                   "Arn",
                 ],
               },
@@ -1033,7 +1011,7 @@ Object {
               "Effect": "Allow",
               "Resource": Object {
                 "Fn::GetAtt": Array [
-                  "PipelinePipelineUpdateCDKPipelineUpdateCodePipelineActionRole1CA4B64E",
+                  "PipelinePipelineUpdatePipelineUpdateCodePipelineActionRole55089D01",
                   "Arn",
                 ],
               },
@@ -1064,27 +1042,6 @@ Object {
         ],
         "RegisterWithThirdParty": true,
         "TargetAction": "CDK-Demo-Pipeline-Source",
-        "TargetPipeline": Object {
-          "Ref": "PipelineC660917D",
-        },
-        "TargetPipelineVersion": 1,
-      },
-      "Type": "AWS::CodePipeline::Webhook",
-    },
-    "PipelineSourceCDKDemoServiceSourceWebhookResource6D0E83CB": Object {
-      "Properties": Object {
-        "Authentication": "GITHUB_HMAC",
-        "AuthenticationConfiguration": Object {
-          "SecretToken": "{{resolve:secretsmanager:aws_github_cdk_demo:SecretString:::}}",
-        },
-        "Filters": Array [
-          Object {
-            "JsonPath": "$.ref",
-            "MatchEquals": "refs/heads/{Branch}",
-          },
-        ],
-        "RegisterWithThirdParty": true,
-        "TargetAction": "CDK-Demo-Service-Source",
         "TargetPipeline": Object {
           "Ref": "PipelineC660917D",
         },

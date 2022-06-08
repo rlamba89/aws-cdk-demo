@@ -1,6 +1,6 @@
 {
  "Resources": {
-  "FunctionProductionServiceRole8A22AB41": {
+  "LambdaProductionServiceRole5AB5692D": {
    "Type": "AWS::IAM::Role",
    "Properties": {
     "AssumeRolePolicyDocument": {
@@ -31,59 +31,59 @@
     ]
    },
    "Metadata": {
-    "aws:cdk:path": "CDK-Lambda-Stack-Production/Function-Production/ServiceRole/Resource"
+    "aws:cdk:path": "CDK-Lambda-Stack-Production/Lambda-Production/ServiceRole/Resource"
    }
   },
-  "FunctionProductionBE080D84": {
+  "LambdaProductionD745B956": {
    "Type": "AWS::Lambda::Function",
    "Properties": {
     "Code": {
      "S3Bucket": {
-      "Ref": "FunctionProductionLambdaSourceBucketNameParameterECE0E4FA"
+      "Ref": "LambdaProductionLambdaSourceBucketNameParameterCD0FECFA"
      },
      "S3Key": {
-      "Ref": "FunctionProductionLambdaSourceObjectKeyParameter376DB144"
+      "Ref": "LambdaProductionLambdaSourceObjectKeyParameter8E6FD689"
      }
     },
     "Role": {
      "Fn::GetAtt": [
-      "FunctionProductionServiceRole8A22AB41",
+      "LambdaProductionServiceRole5AB5692D",
       "Arn"
      ]
     },
-    "FunctionName": "ServiceLambda-CDKDemo-Production",
-    "Handler": "source/lambda.handler",
+    "FunctionName": "Lambda-CDKDemo-Production",
+    "Handler": "lambda.handler",
     "Runtime": "nodejs14.x"
    },
    "DependsOn": [
-    "FunctionProductionServiceRole8A22AB41"
+    "LambdaProductionServiceRole5AB5692D"
    ],
    "Metadata": {
-    "aws:cdk:path": "CDK-Lambda-Stack-Production/Function-Production/Resource"
+    "aws:cdk:path": "CDK-Lambda-Stack-Production/Lambda-Production/Resource"
    }
   },
-  "FunctionProductionFunctionUrl18B4FEBD": {
+  "LambdaProductionFunctionUrl73929506": {
    "Type": "AWS::Lambda::Url",
    "Properties": {
     "AuthType": "NONE",
     "TargetFunctionArn": {
      "Fn::GetAtt": [
-      "FunctionProductionBE080D84",
+      "LambdaProductionD745B956",
       "Arn"
      ]
     }
    },
    "Metadata": {
-    "aws:cdk:path": "CDK-Lambda-Stack-Production/Function-Production/FunctionUrl/Resource"
+    "aws:cdk:path": "CDK-Lambda-Stack-Production/Lambda-Production/FunctionUrl/Resource"
    }
   },
-  "FunctionProductioninvokefunctionurl5FE233BF": {
+  "LambdaProductioninvokefunctionurl03738338": {
    "Type": "AWS::Lambda::Permission",
    "Properties": {
     "Action": "lambda:InvokeFunctionUrl",
     "FunctionName": {
      "Fn::GetAtt": [
-      "FunctionProductionBE080D84",
+      "LambdaProductionD745B956",
       "Arn"
      ]
     },
@@ -91,7 +91,7 @@
     "FunctionUrlAuthType": "NONE"
    },
    "Metadata": {
-    "aws:cdk:path": "CDK-Lambda-Stack-Production/Function-Production/invoke-function-url"
+    "aws:cdk:path": "CDK-Lambda-Stack-Production/Lambda-Production/invoke-function-url"
    }
   },
   "ServiceAPI3C3FEA49": {
@@ -113,7 +113,7 @@
     "IntegrationType": "AWS_PROXY",
     "IntegrationUri": {
      "Fn::GetAtt": [
-      "FunctionProductionBE080D84",
+      "LambdaProductionD745B956",
       "Arn"
      ]
     },
@@ -129,7 +129,7 @@
     "Action": "lambda:InvokeFunction",
     "FunctionName": {
      "Fn::GetAtt": [
-      "FunctionProductionBE080D84",
+      "LambdaProductionD745B956",
       "Arn"
      ]
     },
@@ -212,10 +212,10 @@
   }
  },
  "Parameters": {
-  "FunctionProductionLambdaSourceBucketNameParameterECE0E4FA": {
+  "LambdaProductionLambdaSourceBucketNameParameterCD0FECFA": {
    "Type": "String"
   },
-  "FunctionProductionLambdaSourceObjectKeyParameter376DB144": {
+  "LambdaProductionLambdaSourceObjectKeyParameter8E6FD689": {
    "Type": "String"
   },
   "BootstrapVersion": {
@@ -229,7 +229,7 @@
    "Description": "lambda url",
    "Value": {
     "Fn::GetAtt": [
-     "FunctionProductionFunctionUrl18B4FEBD",
+     "LambdaProductionFunctionUrl73929506",
      "FunctionUrl"
     ]
    }

@@ -1,6 +1,6 @@
 {
  "Resources": {
-  "FunctionStagingServiceRoleA512FBD7": {
+  "LambdaStagingServiceRoleA7912B2B": {
    "Type": "AWS::IAM::Role",
    "Properties": {
     "AssumeRolePolicyDocument": {
@@ -31,59 +31,59 @@
     ]
    },
    "Metadata": {
-    "aws:cdk:path": "CDK-Lambda-Stack-Staging/Function-Staging/ServiceRole/Resource"
+    "aws:cdk:path": "CDK-Lambda-Stack-Staging/Lambda-Staging/ServiceRole/Resource"
    }
   },
-  "FunctionStaging1785DE28": {
+  "LambdaStaging69A8F689": {
    "Type": "AWS::Lambda::Function",
    "Properties": {
     "Code": {
      "S3Bucket": {
-      "Ref": "FunctionStagingLambdaSourceBucketNameParameter9934F974"
+      "Ref": "LambdaStagingLambdaSourceBucketNameParameterA1214D3E"
      },
      "S3Key": {
-      "Ref": "FunctionStagingLambdaSourceObjectKeyParameter9D29163A"
+      "Ref": "LambdaStagingLambdaSourceObjectKeyParameter39BB2ECD"
      }
     },
     "Role": {
      "Fn::GetAtt": [
-      "FunctionStagingServiceRoleA512FBD7",
+      "LambdaStagingServiceRoleA7912B2B",
       "Arn"
      ]
     },
-    "FunctionName": "ServiceLambda-CDKDemo-Staging",
-    "Handler": "source/lambda.handler",
+    "FunctionName": "Lambda-CDKDemo-Staging",
+    "Handler": "lambda.handler",
     "Runtime": "nodejs14.x"
    },
    "DependsOn": [
-    "FunctionStagingServiceRoleA512FBD7"
+    "LambdaStagingServiceRoleA7912B2B"
    ],
    "Metadata": {
-    "aws:cdk:path": "CDK-Lambda-Stack-Staging/Function-Staging/Resource"
+    "aws:cdk:path": "CDK-Lambda-Stack-Staging/Lambda-Staging/Resource"
    }
   },
-  "FunctionStagingFunctionUrl84D01EC0": {
+  "LambdaStagingFunctionUrl1B24A216": {
    "Type": "AWS::Lambda::Url",
    "Properties": {
     "AuthType": "NONE",
     "TargetFunctionArn": {
      "Fn::GetAtt": [
-      "FunctionStaging1785DE28",
+      "LambdaStaging69A8F689",
       "Arn"
      ]
     }
    },
    "Metadata": {
-    "aws:cdk:path": "CDK-Lambda-Stack-Staging/Function-Staging/FunctionUrl/Resource"
+    "aws:cdk:path": "CDK-Lambda-Stack-Staging/Lambda-Staging/FunctionUrl/Resource"
    }
   },
-  "FunctionStaginginvokefunctionurlDA704652": {
+  "LambdaStaginginvokefunctionurl8EE325C6": {
    "Type": "AWS::Lambda::Permission",
    "Properties": {
     "Action": "lambda:InvokeFunctionUrl",
     "FunctionName": {
      "Fn::GetAtt": [
-      "FunctionStaging1785DE28",
+      "LambdaStaging69A8F689",
       "Arn"
      ]
     },
@@ -91,7 +91,7 @@
     "FunctionUrlAuthType": "NONE"
    },
    "Metadata": {
-    "aws:cdk:path": "CDK-Lambda-Stack-Staging/Function-Staging/invoke-function-url"
+    "aws:cdk:path": "CDK-Lambda-Stack-Staging/Lambda-Staging/invoke-function-url"
    }
   },
   "ServiceAPI3C3FEA49": {
@@ -113,7 +113,7 @@
     "IntegrationType": "AWS_PROXY",
     "IntegrationUri": {
      "Fn::GetAtt": [
-      "FunctionStaging1785DE28",
+      "LambdaStaging69A8F689",
       "Arn"
      ]
     },
@@ -129,7 +129,7 @@
     "Action": "lambda:InvokeFunction",
     "FunctionName": {
      "Fn::GetAtt": [
-      "FunctionStaging1785DE28",
+      "LambdaStaging69A8F689",
       "Arn"
      ]
     },
@@ -212,10 +212,10 @@
   }
  },
  "Parameters": {
-  "FunctionStagingLambdaSourceBucketNameParameter9934F974": {
+  "LambdaStagingLambdaSourceBucketNameParameterA1214D3E": {
    "Type": "String"
   },
-  "FunctionStagingLambdaSourceObjectKeyParameter9D29163A": {
+  "LambdaStagingLambdaSourceObjectKeyParameter39BB2ECD": {
    "Type": "String"
   },
   "BootstrapVersion": {
@@ -229,7 +229,7 @@
    "Description": "lambda url",
    "Value": {
     "Fn::GetAtt": [
-     "FunctionStagingFunctionUrl84D01EC0",
+     "LambdaStagingFunctionUrl1B24A216",
      "FunctionUrl"
     ]
    }

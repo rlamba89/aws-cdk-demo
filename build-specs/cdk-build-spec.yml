@@ -10,9 +10,6 @@ phases:
       - npm run build
       - npm test
       - npm run cdk -- synth
-  post_build:
-    commands:
-      - cp -r lambda cdk.out
 
 artifacts:
   base-directory: cdk.out

@@ -7,20 +7,20 @@ import { PipelinesStack } from '../lib/pipelines-stack';
 
 const app = new cdk.App();
 
-const pipelines = new PipelinesStack(app, "PipelinesStack")
-// const pipeline = new PipelineStack(app, 'PipelineStack', {});
+//const pipelines = new PipelinesStack(app, "PipelinesStack")
+ const pipeline = new PipelineStack(app, 'PipelineStack', {});
 
 // // new BillingStack(app, 'BillingStack', {  
 // //   EmailAddress:"rahul@lifeboxhealth.com",
 // //   BudgetAmount:5
 // // });
   
-// const serviceStackStaging= new ServerStack(app, "CDK-Lambda-Stack-Staging",{
-//     StageName:"Staging"
-// })
-// pipeline.addServiceStage(serviceStackStaging, "Staging", false);
+const serviceStackStaging= new ServerStack(app, "CDK-Lambda-Stack-Staging",{
+    StageName:"Staging"
+})
+pipeline.addServiceStage(serviceStackStaging, "Staging", false);
 
-// const serviceStackProduction = new ServerStack(app, "CDK-Lambda-Stack-Production",{
-//     StageName:"Production"
-// })
-// pipeline.addServiceStage(serviceStackProduction, "Production", true);
+const serviceStackProduction = new ServerStack(app, "CDK-Lambda-Stack-Production",{
+    StageName:"Production"
+})
+pipeline.addServiceStage(serviceStackProduction, "Production", true);

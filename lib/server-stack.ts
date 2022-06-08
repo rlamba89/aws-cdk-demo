@@ -1,9 +1,9 @@
-import {  CfnOutput, Stack, StackProps } from "aws-cdk-lib";
+import {  BundlingOutput, CfnOutput, Stack, StackProps } from "aws-cdk-lib";
 import { Function, Runtime, Code, CfnParametersCode, FunctionUrlAuthType } from "aws-cdk-lib/aws-lambda";
 import { Construct } from "constructs";
 import { HttpApi } from "@aws-cdk/aws-apigatewayv2-alpha";
 import { HttpLambdaIntegration} from "@aws-cdk/aws-apigatewayv2-integrations-alpha";
-
+import * as path from 'path';
 
 interface ServerStackProps extends StackProps{
     StageName :string
@@ -15,14 +15,25 @@ export class ServerStack extends Stack {
 
     constructor(scope:Construct, id: string, props?:ServerStackProps){
         super(scope, id, props)
+        console.log(path.resolve(process.cwd(), 'lambda'))
+        
+        // var lambda =new Function(this, `Lambda-${props?.StageName}`, {
+        //     runtime: Runtime.NODEJS_14_X,
+        //     handler: 'lambda.handler',
+        //     code: Code.fromAsset(path.resolve(process.cwd(), 'lambda'),{
+        //         bundling:{
+        //             image:Runtime.NODEJS_14_X.bundlingImage,
+        //             user:"root",
+        //             command:['npm install']
+        //         }
+        //     }),
+        //     functionName : `ServiceLambda-CDKDemo-${props?.StageName}`
+        //  });
 
-         this.serviceCode = Code.fromCfnParameters()
-
-         
-        var lambda =new Function(this, `Function-${props?.StageName}`, {
+        var lambda =new Function(this, `Lambda-${props?.StageName}`, {
             runtime: Runtime.NODEJS_14_X,
-            handler: 'source/lambda.handler',
-            code: this.serviceCode,
+            handler: 'lambda.handler',
+            code: Code.fromAsset(path.resolve(process.cwd(), 'lambda')),
             functionName : `ServiceLambda-CDKDemo-${props?.StageName}`
          });
 

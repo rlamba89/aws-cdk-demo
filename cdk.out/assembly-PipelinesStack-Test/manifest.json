@@ -1,0 +1,125 @@
+{
+  "version": "18.0.0",
+  "artifacts": {
+    "PipelinesStackTestCDKLambdaStackTest074EA9DA.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "PipelinesStackTestCDKLambdaStackTest074EA9DA.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "PipelinesStackTestCDKLambdaStackTest074EA9DA": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "PipelinesStackTestCDKLambdaStackTest074EA9DA.template.json",
+        "validateOnSynth": true,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/dd5aaec22dc6b73c3e5cdfba2db8d07cf8093dd5deb8746a163b8c84879c80f6.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "PipelinesStackTestCDKLambdaStackTest074EA9DA.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        },
+        "stackName": "Test-CDK-Lambda-Stack-Test"
+      },
+      "dependencies": [
+        "PipelinesStackTestCDKLambdaStackTest074EA9DA.assets"
+      ],
+      "metadata": {
+        "/PipelinesStack/Test/CDK-Lambda-Stack-Test/Lambda-Test/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LambdaTestServiceRole2B145758"
+          }
+        ],
+        "/PipelinesStack/Test/CDK-Lambda-Stack-Test/Lambda-Test/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LambdaTest45A67247"
+          }
+        ],
+        "/PipelinesStack/Test/CDK-Lambda-Stack-Test/Lambda-Test/FunctionUrl/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LambdaTestFunctionUrl1BC1A06F"
+          }
+        ],
+        "/PipelinesStack/Test/CDK-Lambda-Stack-Test/Lambda-Test/invoke-function-url": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LambdaTestinvokefunctionurlCA525908"
+          }
+        ],
+        "/PipelinesStack/Test/CDK-Lambda-Stack-Test/ServiceAPI/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServiceAPI3C3FEA49"
+          }
+        ],
+        "/PipelinesStack/Test/CDK-Lambda-Stack-Test/ServiceAPI/DefaultRoute/LambdaIntegration-Test/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServiceAPIDefaultRouteLambdaIntegrationTest9C1BEC31"
+          }
+        ],
+        "/PipelinesStack/Test/CDK-Lambda-Stack-Test/ServiceAPI/DefaultRoute/LambdaIntegration-Test-Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServiceAPIDefaultRouteLambdaIntegrationTestPermissionC56E9286"
+          }
+        ],
+        "/PipelinesStack/Test/CDK-Lambda-Stack-Test/ServiceAPI/DefaultRoute/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServiceAPIDefaultRouteB19188BE"
+          }
+        ],
+        "/PipelinesStack/Test/CDK-Lambda-Stack-Test/ServiceAPI/DefaultStage/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServiceAPIDefaultStageD3D272D3"
+          }
+        ],
+        "/PipelinesStack/Test/CDK-Lambda-Stack-Test/LambdaUrl": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LambdaUrl"
+          }
+        ],
+        "/PipelinesStack/Test/CDK-Lambda-Stack-Test/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/PipelinesStack/Test/CDK-Lambda-Stack-Test/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/PipelinesStack/Test/CDK-Lambda-Stack-Test/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/PipelinesStack/Test/CDK-Lambda-Stack-Test/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "PipelinesStack/Test/CDK-Lambda-Stack-Test"
+    }
+  }
+}

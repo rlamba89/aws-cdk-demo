@@ -3,6 +3,8 @@
 *.d.ts
 node_modules
 
+!lambda/app.js
+!lambda/lambda.js
 # CDK asset staging directory
 .cdk.staging
 test-reports
